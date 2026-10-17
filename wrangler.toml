@@ -1,0 +1,7 @@
+# Inställningar för Cloudflare Workers (statiska filer). Går före inställningarna i Cloudflares gränssnitt.
+# Bara mappen public/ publiceras, så att design/ och README inte hamnar på webben.
+name = "junestaden"
+compatibility_date = "2026-10-01"
+
+[assets]
+directory = "./public"

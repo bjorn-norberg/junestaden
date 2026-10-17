@@ -8,10 +8,11 @@ EPAkollen, Formelkollen och Mängdkollen.
 - `design/` – arbetsfiler som inte publiceras: delningsbildens mall (`og.html`) och favikonförslagen
 
 ## Publicering
-Cloudflare Pages är kopplat till repot och publicerar automatiskt vid varje push till `main`.
+Cloudflare (Workers med statiska filer) är kopplat till repot och publicerar automatiskt vid varje push till `main`.
+Inställningarna finns i `wrangler.toml`: bara mappen `public/` publiceras.
 
 - Build command: *(tom)*
-- Build output directory: `public`
+- Deploy command: `npx wrangler deploy`
 
 ## Uppdatera skärmdumpar
 Bilderna i `public/img/` är mobilskärmdumpar (600 × 1298, WebP). Byt fil med samma namn
