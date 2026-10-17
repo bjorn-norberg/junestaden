@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Junestaden – webbverktyg för bygg och vardag</title>
+<meta name="description" content="Webbverktyg byggda av Björn Norberg i Jönköping: EPAkollen, Formelkollen och Mängdkollen. Gratis, utan inloggning och gjorda för mobilen.">
+<meta name="theme-color" content="#0e1116">
+<link rel="canonical" href="https://junestaden.se/">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="sv_SE">
+<meta property="og:site_name" content="Junestaden">
+<meta property="og:url" content="https://junestaden.se/">
+<meta property="og:title" content="Junestaden – webbverktyg för bygg och vardag">
+<meta property="og:description" content="EPAkollen, Formelkollen och Mängdkollen. Gratis, utan inloggning och gjorda för mobilen.">
+<meta property="og:image" content="https://junestaden.se/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://junestaden.se/#website",
+      "url": "https://junestaden.se/",
+      "name": "Junestaden",
+      "description": "Webbverktyg för bygg och vardag: EPAkollen, Formelkollen och Mängdkollen.",
+      "inLanguage": "sv-SE",
+      "author": { "@id": "https://junestaden.se/#person" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://junestaden.se/#person",
+      "name": "Björn Norberg",
+      "url": "https://junestaden.se/",
+      "image": "https://bygg.junestaden.se/img/profil.jpg",
+      "jobTitle": "Student, VVS-ingenjör",
+      "homeLocation": {
+        "@type": "Place",
+        "address": { "@type": "PostalAddress", "addressLocality": "Jönköping", "addressCountry": "SE" }
+      },
+      "affiliation": { "@type": "CollegeOrUniversity", "name": "TUC Yrkeshögskola" },
+      "sameAs": ["https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345/"]
+    },
+    {
+      "@type": "ItemList",
+      "name": "Projekt",
+      "itemListElement": [
+        {
+          "@type": "ListItem", "position": 1,
+          "item": {
+            "@type": "WebApplication", "name": "EPAkollen", "url": "https://epa.junestaden.se/",
+            "applicationCategory": "TravelApplication", "operatingSystem": "Alla",
+            "description": "Räkna ut restid och bränslekostnad för EPA- och A-traktor.",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "SEK" },
+            "author": { "@id": "https://junestaden.se/#person" }
+          }
+        },
+        {
+          "@type": "ListItem", "position": 2,
+          "item": {
+            "@type": "WebApplication", "name": "Formelkollen", "url": "https://vvs.junestaden.se/",
+            "applicationCategory": "EducationalApplication", "operatingSystem": "Alla",
+            "description": "VVS-formelsamling för ventilation, värme, pumpar och tappvatten med räknare och enhetsomvandlare.",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "SEK" },
+            "author": { "@id": "https://junestaden.se/#person" }
+          }
+        },
+        {
+          "@type": "ListItem", "position": 3,
+          "item": {
+            "@type": "WebApplication", "name": "Mängdkollen", "url": "https://bygg.junestaden.se/",
+            "applicationCategory": "UtilitiesApplication", "operatingSystem": "Alla",
+            "description": "Räkna åtgång av avjämningsmassa, fix och fogbruk utifrån tillverkarnas värden.",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "SEK" },
+            "author": { "@id": "https://junestaden.se/#person" }
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e1116;
+  --bg-2: #141820;
+  --line: #262d38;
+  --fg: #f2efe8;
+  --muted: #9aa3b0;
+  --frame: #2a313c;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -12px rgba(0,0,0,.6);
+  --shadow-hover: 0 2px 4px rgba(0,0,0,.4), 0 30px 60px -20px rgba(0,0,0,.8);
+  --serif: "Instrument Serif", Georgia, serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f5f3ee;
+    --bg-2: #ebe8e1;
+    --line: #e2ded5;
+    --fg: #16181d;
+    --muted: #5e6470;
+    --frame: #1d222b;
+    --shadow: 0 1px 2px rgba(20,20,30,.06), 0 12px 32px -14px rgba(20,20,30,.18);
+    --shadow-hover: 0 2px 4px rgba(20,20,30,.06), 0 30px 60px -22px rgba(20,20,30,.32);
+    color-scheme: light;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+body::before {
+  /* svagt ljussken bakom rubriken */
+  content: "";
+  position: fixed;
+  inset: -20vh -10vw auto;
+  height: 70vh;
+  background: radial-gradient(50% 60% at 50% 0%, color-mix(in srgb, var(--fg) 7%, transparent), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+a { color: inherit; }
+
+.wrap {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
+}
+
+/* Topp */
+header.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 28px;
+}
+.brand {
+  font-family: var(--serif);
+  font-size: 26px;
+  letter-spacing: .2px;
+  text-decoration: none;
+}
+.brand em { font-style: italic; color: var(--muted); }
+
+/* Hero */
+.hero {
+  padding: clamp(24px, 4vw, 48px) 0 clamp(32px, 4.5vw, 56px);
+  max-width: 760px;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 18px;
+}
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+}
+h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(42px, 7.5vw, 84px);
+  line-height: 1.02;
+  letter-spacing: -.01em;
+  margin: 0 0 20px;
+}
+h1 em { color: var(--muted); }
+.lead {
+  font-size: clamp(16.5px, 2vw, 19px);
+  color: var(--muted);
+  max-width: 640px;
+  margin: 0;
+}
+.lead strong { color: var(--fg); font-weight: 500; }
+
+/* Projektkort */
+.projects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 2.6vw, 32px);
+  padding-bottom: clamp(64px, 9vw, 112px);
+}
+.card {
+  --accent: #fff;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  border-radius: 20px;
+  outline: none;
+  perspective: 900px;
+  transition: opacity .4s;
+}
+.card[data-site="epa"]   { --accent: #d4ff3a; }
+.card[data-site="vvs"]   { --accent: #ff8a3d; }
+.card[data-site="mangd"] { --accent: #ffc21a; }
+
+/* Scen med telefon som sticker upp nerifrån */
+.shot {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 18px;
+  overflow: hidden;
+  background:
+    radial-gradient(70% 80% at 50% 100%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
+    var(--bg-2);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(0);
+  transition: transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s, border-color .4s;
+  will-change: transform;
+}
+.phone {
+  position: absolute;
+  left: 50%;
+  top: 11%;
+  width: 46%;
+  border: 5px solid var(--frame);
+  border-radius: 24px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 24px 48px -16px rgba(0,0,0,.7);
+  transform: translateX(-50%);
+  transition: transform .7s cubic-bezier(.2,.7,.2,1);
+}
+.phone img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.meta { padding: 22px 4px 0; }
+.meta-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.1;
+  margin: 0;
+}
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-right: 10px;
+  vertical-align: middle;
+  transform: translateY(-3px);
+}
+.arrow {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  transition: background .35s, border-color .35s, transform .45s cubic-bezier(.2,.7,.2,1), color .35s;
+}
+.arrow svg { width: 15px; height: 15px; }
+.desc {
+  color: var(--muted);
+  margin: 0 0 14px;
+  font-size: 15.5px;
+}
+.url {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  color: var(--muted);
+  opacity: .8;
+}
+
+/* Hover- och fokusläge */
+.card:hover .shot,
+.card:focus-visible .shot {
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-8px);
+  box-shadow: var(--shadow-hover), 0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent);
+  border-color: transparent;
+}
+.card:hover .phone,
+.card:focus-visible .phone { transform: translateX(-50%) translateY(-6%); }
+.card:hover .arrow,
+.card:focus-visible .arrow {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #111;
+  transform: rotate(-45deg);
+}
+.card:focus-visible .shot { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+/* Andra kort tonas ned lite när ett är aktivt */
+@media (hover: hover) {
+  .projects:has(.card:hover) .card:not(:hover) { opacity: .7; }
+}
+
+/* Tryck på mobil */
+.card:active .shot { transform: scale(.985); transition-duration: .15s; }
+
+footer {
+  margin-top: auto;
+  border-top: 1px solid var(--line);
+}
+footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-top: 24px;
+  padding-bottom: 32px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.byline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.social {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin: -4px 0;
+  border-radius: 7px;
+  color: var(--muted);
+  transition: color .25s, background .25s;
+}
+.social svg { width: 16px; height: 16px; }
+.social:hover,
+.social:focus-visible { color: var(--fg); background: color-mix(in srgb, var(--fg) 8%, transparent); }
+
+/* Responsivt */
+@media (max-width: 960px) {
+  .projects { grid-template-columns: repeat(2, 1fr); }
+  .card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .card:last-child:nth-child(odd) .shot { aspect-ratio: 2 / 1; }
+  .card:last-child:nth-child(odd) .phone { width: 27%; }
+}
+@media (max-width: 640px) {
+  .projects { grid-template-columns: 1fr; gap: 40px; }
+  .card:last-child:nth-child(odd) .shot { aspect-ratio: 4 / 3; }
+  .card:last-child:nth-child(odd) .phone { width: 46%; }
+  .shot { aspect-ratio: 4 / 3; }
+  h2 { font-size: 28px; }
+  .meta { padding-top: 18px; }
+}
+
+/* Intro-animation. Innehållet syns alltid om animationen inte körs:
+   klassen sätts bara med JS och tas bort efter 1,5 s oavsett. */
+@media (prefers-reduced-motion: no-preference) {
+  .anim .reveal { animation: rise .9s cubic-bezier(.2,.7,.2,1) backwards; }
+  .anim .hero .reveal:nth-child(2) { animation-delay: .08s; }
+  .anim .hero .reveal:nth-child(3) { animation-delay: .16s; }
+  .anim .card.reveal:nth-child(1) { animation-delay: .22s; }
+  .anim .card.reveal:nth-child(2) { animation-delay: .32s; }
+  .anim .card.reveal:nth-child(3) { animation-delay: .42s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shot, .phone, .arrow { transition: none !important; }
+}
+</style>
+<script>
+  document.documentElement.classList.add('anim');
+  setTimeout(function () { document.documentElement.classList.remove('anim'); }, 1500);
+</script>
+</head>
+<body>
+
+<header class="wrap top">
+  <a class="brand" href="/">Junestaden<em>.se</em></a>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <p class="eyebrow reveal">Projekt</p>
+    <h1 class="reveal">Webbverktyg för <em>bygg</em> och vardag.</h1>
+    <p class="lead reveal">Jag heter <strong>Björn Norberg</strong> och studerar till VVS-ingenjör i Jönköping. Här samlar jag verktygen jag har byggt. Alla är gratis, kräver ingen inloggning och fungerar lika bra i mobilen som på datorn.</p>
+  </section>
+
+  <section class="projects" aria-label="Projekt">
+    <a class="card reveal" data-site="epa" href="https://epa.junestaden.se">
+      <div class="shot">
+        <div class="phone"><img src="img/epa.webp" alt="EPAkollen i mobilen med en uträknad rutt: 36 km, 1 h 11 min, 39 kr" width="600" height="1298" decoding="async"></div>
+      </div>
+      <div class="meta">
+        <div class="meta-top">
+          <h2><span class="dot"></span>EPAkollen</h2>
+          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+        </div>
+        <p class="desc">Räkna ut restid och bränslekostnad för din EPA-traktor. Rutten undviker motorvägar, räknas på 30&nbsp;km/h och använder dagens bensinpris.</p>
+        <span class="url">epa.junestaden.se</span>
+      </div>
+    </a>
+
+    <a class="card reveal" data-site="vvs" href="https://vvs.junestaden.se">
+      <div class="shot">
+        <div class="phone"><img src="img/vvs.webp" alt="Formelkollen i mobilen: VVS-formelsamling med formelkategorier och sökfält" width="600" height="1298" decoding="async"></div>
+      </div>
+      <div class="meta">
+        <div class="meta-top">
+          <h2><span class="dot"></span>Formelkollen</h2>
+          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+        </div>
+        <p class="desc">VVS-formelsamling för ventilation, värme, pumpar och tappvatten med inbyggda räknare, enhetsomvandlare och tryckfallskalkylatorer för rör och kanaler.</p>
+        <span class="url">vvs.junestaden.se</span>
+      </div>
+    </a>
+
+    <a class="card reveal" data-site="mangd" href="https://bygg.junestaden.se">
+      <div class="shot">
+        <div class="phone"><img src="img/mangdkollen.webp" alt="Mängdkollen i mobilen: räkna rätt mängd innan du åker till bygghandeln" width="600" height="1298" decoding="async"></div>
+      </div>
+      <div class="meta">
+        <div class="meta-top">
+          <h2><span class="dot"></span>Mängdkollen</h2>
+          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+        </div>
+        <p class="desc">Räkna rätt mängd avjämning, fix och fogbruk innan du åker till bygghandeln. Kilo, säckar och vatten utifrån tillverkarens egna åtgångsvärden.</p>
+        <span class="url">bygg.junestaden.se</span>
+      </div>
+    </a>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Junestaden</span>
+    <span class="byline">Byggt i Jönköping av Björn Norberg
+      <a class="social" href="https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345/" rel="me noopener" target="_blank" aria-label="Björn Norberg på LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
+    </span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Lätt 3D-lutning som följer muspekaren (bara med mus, inte touch)
+if (matchMedia('(hover: hover) and (pointer: fine)').matches &&
+    !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.card').forEach(function (card) {
+    var shot = card.querySelector('.shot');
+    shot.addEventListener('pointermove', function (e) {
+      var r = shot.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - .5;
+      var y = (e.clientY - r.top) / r.height - .5;
+      shot.style.setProperty('--ry', (x * 6).toFixed(2) + 'deg');
+      shot.style.setProperty('--rx', (-y * 6).toFixed(2) + 'deg');
+    });
+    card.addEventListener('pointerleave', function () {
+      shot.style.removeProperty('--rx');
+      shot.style.removeProperty('--ry');
+    });
+  });
+}
+</script>
+</body>
+</html>

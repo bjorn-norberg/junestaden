@@ -1,0 +1,46 @@
+﻿<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Favikonförslag</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; background: #0e1116; color: #f2efe8; font-family: Inter, system-ui, sans-serif; padding: 32px 16px 48px; }
+h1 { font-family: "Instrument Serif", serif; font-weight: 400; font-size: 40px; margin: 0 0 6px; }
+p.lead { color: #9aa3b0; margin: 0 0 28px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr)); gap: 20px; max-width: 1440px; }
+.opt { background: #161b23; border: 1px solid #262d38; border-radius: 18px; padding: 20px; }
+.opt h2 { margin: 0 0 4px; font-size: 17px; font-weight: 600; }
+.opt p { margin: 0 0 18px; color: #9aa3b0; font-size: 14px; line-height: 1.5; }
+.sizes { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; margin-bottom: 18px; }
+.sizes figure { margin: 0; text-align: center; font-size: 11px; color: #9aa3b0; }
+.sizes img { display: block; margin: 0 auto 6px; }
+.tab { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px 8px 0 0; font-size: 12px; width: 170px; }
+.tab.dark { background: #2b2b2b; color: #eee; }
+.tab.light { background: #f3f3f3; color: #222; }
+.tabs { display: flex; gap: 8px; }
+.tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #ff8a3d; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+<h1>Favikonförslag</h1>
+<p class="lead">Visade i riktiga storlekar: 16 px (flik), 32 px, 64 px och 128 px (hemskärm).</p>
+<div class="grid" id="grid"></div>
+<script>
+var opts = [
+  ["a-j-orange.svg", "A · Nr 1 anpassad", "Rekommenderad", "Ditt nr 1 i sidans färger: krämvitt J och orange fyrkant på mörk botten."],
+  ["b-j-prickar.svg", "B · J med tre prickar", "", "En prick per projekt i projektens egna färger: lime, orange och gul."],
+  ["c-serif-j.svg", "C · Kursivt serif-J", "", "Samma typsnitt som logotypen och rubriken på sidan, med orange understreck."],
+  ["d-rutnat.svg", "D · Rutnät", "", "Byggt på ditt nr 21. Tre rutor för projekten och en streckad ruta för nästa projekt."]
+];
+document.getElementById('grid').innerHTML = opts.map(function (o) {
+  return '<div class="opt">' + (o[2] ? '<span class="tag">' + o[2] + '</span>' : '') +
+    '<h2>' + o[1] + '</h2><p>' + o[3] + '</p><div class="sizes">' +
+    [16, 32, 64, 128].map(function (s) { return '<figure><img src="favicons/' + o[0] + '" width="' + s + '" height="' + s + '">' + s + '</figure>'; }).join('') +
+    '</div><div class="tabs"><div class="tab dark"><img src="favicons/' + o[0] + '" width="16" height="16">Junestaden</div>' +
+    '<div class="tab light"><img src="favicons/' + o[0] + '" width="16" height="16">Junestaden</div></div></div>';
+}).join('');
+</script>
+</body>
+</html>

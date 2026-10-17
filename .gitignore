@@ -1,0 +1,5 @@
+.claude/
+*.local.*
+forhandsvisning*.png
+Thumbs.db
+.DS_Store
