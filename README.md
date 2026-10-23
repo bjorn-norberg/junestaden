@@ -1,7 +1,7 @@
 # Junestaden
 
 Startsidan för [junestaden.se](https://junestaden.se) som länkar till mina webbverktyg:
-EPAkollen, Formelkollen och Mängdkollen.
+Nordrange, Formelkollen, Mängdkollen och EPAkollen.
 
 ## Struktur
 - `public/` – det som publiceras: `index.html`, ikoner, bilder, `robots.txt` och `sitemap.xml`

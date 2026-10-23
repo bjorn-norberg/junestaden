@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Junestaden – webbverktyg för bygg och vardag</title>
-<meta name="description" content="Webbverktyg byggda av Björn Norberg i Jönköping: EPAkollen, Formelkollen och Mängdkollen. Gratis, utan inloggning och gjorda för mobilen.">
+<meta name="description" content="Webbverktyg byggda av Björn Norberg i Jönköping: Nordrange, Formelkollen, Mängdkollen och EPAkollen. Gratis, utan inloggning och gjorda för mobilen.">
 <meta name="author" content="Björn Norberg">
 <meta name="theme-color" content="#0e1116">
 <link rel="canonical" href="https://junestaden.se/">
@@ -19,8 +19,8 @@
 <meta property="og:site_name" content="Junestaden">
 <meta property="og:url" content="https://junestaden.se/">
 <meta property="og:title" content="Junestaden – webbverktyg för bygg och vardag">
-<meta property="og:description" content="EPAkollen, Formelkollen och Mängdkollen – gratis webbverktyg för EPA-resor, VVS-formler och materialåtgång. Utan inloggning, i mobilen och på datorn.">
-<meta property="og:image" content="https://junestaden.se/img/og.jpg?v=4">
+<meta property="og:description" content="Nordrange, Formelkollen, Mängdkollen och EPAkollen – gratis webbverktyg för elbilsresor, VVS-formler, materialåtgång och EPA-resor. Utan inloggning, i mobilen och på datorn.">
+<meta property="og:image" content="https://junestaden.se/img/og.jpg?v=5">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -34,7 +34,7 @@
       "@id": "https://junestaden.se/#website",
       "url": "https://junestaden.se/",
       "name": "Junestaden",
-      "description": "Webbverktyg för bygg och vardag: EPAkollen, Formelkollen och Mängdkollen.",
+      "description": "Webbverktyg för bygg och vardag: Nordrange, Formelkollen, Mängdkollen och EPAkollen.",
       "inLanguage": "sv-SE",
       "author": { "@id": "https://junestaden.se/#person" }
     },
@@ -59,9 +59,9 @@
         {
           "@type": "ListItem", "position": 1,
           "item": {
-            "@type": "WebApplication", "name": "EPAkollen", "url": "https://epa.junestaden.se/",
+            "@type": "WebApplication", "name": "Nordrange", "url": "https://nordrange.se/",
             "applicationCategory": "TravelApplication", "operatingSystem": "Alla",
-            "description": "Räkna ut restid och bränslekostnad för EPA- och A-traktor.",
+            "description": "Ruttplanerare för elbil som visar var du ska ladda, hos 20 laddnätverk i Sverige, Norge, Danmark och Finland.",
             "offers": { "@type": "Offer", "price": "0", "priceCurrency": "SEK" },
             "author": { "@id": "https://junestaden.se/#person" }
           }
@@ -82,6 +82,16 @@
             "@type": "WebApplication", "name": "Mängdkollen", "url": "https://bygg.junestaden.se/",
             "applicationCategory": "UtilitiesApplication", "operatingSystem": "Alla",
             "description": "Räkna åtgång av avjämningsmassa, fix och fogbruk utifrån tillverkarnas värden.",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "SEK" },
+            "author": { "@id": "https://junestaden.se/#person" }
+          }
+        },
+        {
+          "@type": "ListItem", "position": 4,
+          "item": {
+            "@type": "WebApplication", "name": "EPAkollen", "url": "https://epa.junestaden.se/",
+            "applicationCategory": "TravelApplication", "operatingSystem": "Alla",
+            "description": "Räkna ut restid och bränslekostnad för EPA- och A-traktor.",
             "offers": { "@type": "Offer", "price": "0", "priceCurrency": "SEK" },
             "author": { "@id": "https://junestaden.se/#person" }
           }
@@ -201,8 +211,8 @@ h1 em { color: var(--muted); }
 /* Projektkort */
 .projects {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(20px, 2.6vw, 32px);
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(28px, 3.2vw, 44px);
   padding-bottom: clamp(64px, 9vw, 112px);
 }
 .card {
@@ -216,6 +226,7 @@ h1 em { color: var(--muted); }
   perspective: 900px;
   transition: opacity .4s;
 }
+.card[data-site="nordrange"] { --accent: #1fc77a; }
 .card[data-site="epa"]   { --accent: #d4ff3a; }
 .card[data-site="vvs"]   { --accent: #ff8a3d; }
 .card[data-site="mangd"] { --accent: #ffc21a; }
@@ -223,7 +234,7 @@ h1 em { color: var(--muted); }
 /* Scen med telefon som sticker upp nerifrån */
 .shot {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 10;
   border-radius: 18px;
   overflow: hidden;
   background:
@@ -239,7 +250,7 @@ h1 em { color: var(--muted); }
   position: absolute;
   left: 50%;
   top: 11%;
-  width: 46%;
+  width: 40%;
   border: 5px solid var(--frame);
   border-radius: 24px;
   overflow: hidden;
@@ -364,16 +375,11 @@ footer .wrap {
 
 /* Responsivt */
 @media (max-width: 960px) {
-  .projects { grid-template-columns: repeat(2, 1fr); }
-  .card:last-child:nth-child(odd) { grid-column: 1 / -1; }
-  .card:last-child:nth-child(odd) .shot { aspect-ratio: 2 / 1; }
-  .card:last-child:nth-child(odd) .phone { width: 27%; }
+  .shot { aspect-ratio: 4 / 3; }
+  .phone { width: 46%; }
 }
 @media (max-width: 640px) {
   .projects { grid-template-columns: 1fr; gap: 40px; }
-  .card:last-child:nth-child(odd) .shot { aspect-ratio: 4 / 3; }
-  .card:last-child:nth-child(odd) .phone { width: 46%; }
-  .shot { aspect-ratio: 4 / 3; }
   h2 { font-size: 28px; }
   .meta { padding-top: 18px; }
 }
@@ -387,6 +393,7 @@ footer .wrap {
   .anim .card.reveal:nth-child(1) { animation-delay: .22s; }
   .anim .card.reveal:nth-child(2) { animation-delay: .32s; }
   .anim .card.reveal:nth-child(3) { animation-delay: .42s; }
+  .anim .card.reveal:nth-child(4) { animation-delay: .52s; }
   @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -412,17 +419,17 @@ footer .wrap {
   </section>
 
   <section class="projects" aria-label="Projekt">
-    <a class="card reveal" data-site="epa" href="https://epa.junestaden.se">
+    <a class="card reveal" data-site="nordrange" href="https://nordrange.se">
       <div class="shot">
-        <div class="phone"><img src="img/epa.webp" alt="EPAkollen i mobilen med en uträknad rutt: 36 km, 1 h 11 min, 39 kr" width="600" height="1298" decoding="async"></div>
+        <div class="phone"><img src="img/nordrange.webp" alt="Nordrange i mobilen: rutt Jönköping–Stockholm, 321 km med ett laddstopp" width="600" height="1298" decoding="async"></div>
       </div>
       <div class="meta">
         <div class="meta-top">
-          <h2><span class="dot"></span>EPAkollen</h2>
+          <h2><span class="dot"></span>Nordrange</h2>
           <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
         </div>
-        <p class="desc">Räkna ut restid och bränslekostnad för din EPA-traktor. Rutten undviker motorvägar, räknas på 30&nbsp;km/h och använder dagens bensinpris.</p>
-        <span class="url">epa.junestaden.se</span>
+        <p class="desc">Ruttplanerare för elbil. Ange bil, batterinivå och resmål, så visar Nordrange var du ska ladda, hos 20 laddnätverk i Sverige, Norge, Danmark och Finland.</p>
+        <span class="url">nordrange.se</span>
       </div>
     </a>
 
@@ -451,6 +458,20 @@ footer .wrap {
         </div>
         <p class="desc">Räkna rätt mängd avjämning, fix och fogbruk innan du åker till bygghandeln. Kilo, säckar och vatten utifrån tillverkarens egna åtgångsvärden.</p>
         <span class="url">bygg.junestaden.se</span>
+      </div>
+    </a>
+
+    <a class="card reveal" data-site="epa" href="https://epa.junestaden.se">
+      <div class="shot">
+        <div class="phone"><img src="img/epa.webp" alt="EPAkollen i mobilen med en uträknad rutt: 36 km, 1 h 11 min, 39 kr" width="600" height="1298" decoding="async"></div>
+      </div>
+      <div class="meta">
+        <div class="meta-top">
+          <h2><span class="dot"></span>EPAkollen</h2>
+          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+        </div>
+        <p class="desc">Räkna ut restid och bränslekostnad för din EPA-traktor. Rutten undviker motorvägar, räknas på 30&nbsp;km/h och använder dagens bensinpris.</p>
+        <span class="url">epa.junestaden.se</span>
       </div>
     </a>
   </section>
