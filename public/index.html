@@ -20,7 +20,7 @@
 <meta property="og:url" content="https://junestaden.se/">
 <meta property="og:title" content="Junestaden – webbverktyg för bygg och vardag">
 <meta property="og:description" content="Nordrange, Formelkollen, Mängdkollen och EPAkollen – gratis webbverktyg för elbilsresor, VVS-formler, materialåtgång och EPA-resor. Utan inloggning, i mobilen och på datorn.">
-<meta property="og:image" content="https://junestaden.se/img/og.jpg?v=5">
+<meta property="og:image" content="https://junestaden.se/img/og.jpg?v=6">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -223,7 +223,6 @@ h1 em { color: var(--muted); }
   text-decoration: none;
   border-radius: 20px;
   outline: none;
-  perspective: 900px;
   transition: opacity .4s;
 }
 .card[data-site="nordrange"] { --accent: #1fc77a; }
@@ -242,13 +241,14 @@ h1 em { color: var(--muted); }
     var(--bg-2);
   border: 1px solid var(--line);
   box-shadow: var(--shadow);
-  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(0);
-  transition: transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s, border-color .4s;
-  will-change: transform;
+  top: 0;
+  transition: top .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s, border-color .4s;
 }
 .phone {
   position: absolute;
-  left: 50%;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
   top: 11%;
   width: 40%;
   border: 5px solid var(--frame);
@@ -256,8 +256,7 @@ h1 em { color: var(--muted); }
   overflow: hidden;
   background: #000;
   box-shadow: 0 24px 48px -16px rgba(0,0,0,.7);
-  transform: translateX(-50%);
-  transition: transform .7s cubic-bezier(.2,.7,.2,1);
+  transition: top .7s cubic-bezier(.2,.7,.2,1);
 }
 .phone img {
   display: block;
@@ -317,12 +316,12 @@ h2 {
 /* Hover- och fokusläge */
 .card:hover .shot,
 .card:focus-visible .shot {
-  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-8px);
+  top: -8px;
   box-shadow: var(--shadow-hover), 0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent);
   border-color: transparent;
 }
 .card:hover .phone,
-.card:focus-visible .phone { transform: translateX(-50%) translateY(-6%); }
+.card:focus-visible .phone { top: 5%; }
 .card:hover .arrow,
 .card:focus-visible .arrow {
   background: var(--accent);
@@ -338,7 +337,7 @@ h2 {
 }
 
 /* Tryck på mobil */
-.card:active .shot { transform: scale(.985); transition-duration: .15s; }
+.card:active .shot { top: -4px; transition-duration: .15s; }
 
 footer {
   margin-top: auto;
@@ -421,7 +420,7 @@ footer .wrap {
   <section class="projects" aria-label="Projekt">
     <a class="card reveal" data-site="nordrange" href="https://nordrange.se">
       <div class="shot">
-        <div class="phone"><img src="img/nordrange.webp" alt="Nordrange i mobilen: rutt Jönköping–Stockholm, 321 km med ett laddstopp" width="600" height="1298" decoding="async"></div>
+        <div class="phone"><img src="img/nordrange.webp" alt="Nordrange i mobilen: rutten Jönköping–Trondheim, 872 km med tre laddstopp" width="600" height="1298" decoding="async"></div>
       </div>
       <div class="meta">
         <div class="meta-top">
@@ -488,25 +487,6 @@ footer .wrap {
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
-
-// Lätt 3D-lutning som följer muspekaren (bara med mus, inte touch)
-if (matchMedia('(hover: hover) and (pointer: fine)').matches &&
-    !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  document.querySelectorAll('.card').forEach(function (card) {
-    var shot = card.querySelector('.shot');
-    shot.addEventListener('pointermove', function (e) {
-      var r = shot.getBoundingClientRect();
-      var x = (e.clientX - r.left) / r.width - .5;
-      var y = (e.clientY - r.top) / r.height - .5;
-      shot.style.setProperty('--ry', (x * 6).toFixed(2) + 'deg');
-      shot.style.setProperty('--rx', (-y * 6).toFixed(2) + 'deg');
-    });
-    card.addEventListener('pointerleave', function () {
-      shot.style.removeProperty('--rx');
-      shot.style.removeProperty('--ry');
-    });
-  });
-}
 </script>
 </body>
 </html>
