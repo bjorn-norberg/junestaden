@@ -148,11 +148,14 @@ header.top {
   align-items: start;
 }
 .intro { grid-column: 1; grid-row: 1; padding-top: clamp(28px, 5vw, 64px); }
-.side { grid-column: 2; grid-row: 1 / span 2; align-self: stretch; padding-top: clamp(28px, 5vw, 64px); }
-.side-inner { display: grid; gap: 20px; }
-@media (min-height: 820px) {
-  .side-inner { position: sticky; top: 28px; }
+.side {
+  grid-column: 2; grid-row: 1 / span 2; align-self: stretch;
+  display: flex; flex-direction: column; gap: 20px;
+  padding-top: clamp(28px, 5vw, 64px);
 }
+/* Bilden scrollar med sidan, LIA-rutan stannar kvar i bild hela vägen ner */
+.side-inner { display: contents; }
+.lia { position: sticky; top: 24px; }
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -326,7 +329,7 @@ footer a { color: inherit; }
   .portrait { order: 1; width: clamp(150px, 44vw, 200px); margin-top: 24px; }
   .portrait img { border-radius: 20px; }
   .intro { order: 2; padding-top: 24px; }
-  .lia { order: 3; margin-top: 28px; }
+  .lia { order: 3; margin-top: 28px; position: static; }
   .content { order: 4; }
   .lia h2 { font-size: 30px; }
 }
@@ -415,8 +418,8 @@ footer a { color: inherit; }
 
     <section class="block">
       <h2>Så tänker jag när jag bygger</h2>
-      <p>Verktygen ska vara gratis, fungera utan konto och vara enkla att använda i mobilen. Du ska kunna få hjälp med en uträkning utan att först bli medlem i ännu en sak.</p>
-      <p>Där det går använder jag tillverkarnas egna värden och länkar till källan. Förutsättningar och begränsningar ska framgå, så att du vet vad svaret bygger på. En snygg siffra är ju inte mycket värd om den räknar fel.</p>
+      <p>Verktygen ska vara gratis, fungera utan konto och vara enkla att använda i mobilen. Du ska kunna få hjälp enkelt utan att först bli medlem i ännu en sak.</p>
+      <p>Där det går använder jag tillverkarnas egna värden och länkar till källan. Förutsättningar och begränsningar ska framgå, så att du vet vad svaret bygger på. En snygg siffra är ju inte mycket värd om den är felaktig.</p>
     </section>
 
     <section class="block">
