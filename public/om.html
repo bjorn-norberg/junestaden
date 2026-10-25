@@ -140,13 +140,18 @@ header.top {
 .topnav a:focus-visible { color: var(--fg); background: color-mix(in srgb, var(--fg) 7%, transparent); }
 .topnav a[aria-current="page"] { color: var(--fg); background: color-mix(in srgb, var(--fg) 9%, transparent); }
 
-/* Hero */
-.hero {
+/* Sidlayout: text till vänster, bild och LIA i en högerspalt som följer med vid scroll */
+.page {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(220px, 26vw, 320px);
-  gap: clamp(32px, 6vw, 80px);
-  align-items: center;
-  padding: clamp(28px, 5vw, 64px) 0 clamp(36px, 5vw, 64px);
+  grid-template-columns: minmax(0, 1fr) clamp(280px, 28vw, 360px);
+  column-gap: clamp(40px, 6vw, 80px);
+  align-items: start;
+}
+.intro { grid-column: 1; grid-row: 1; padding-top: clamp(28px, 5vw, 64px); }
+.side { grid-column: 2; grid-row: 1 / span 2; align-self: stretch; padding-top: clamp(28px, 5vw, 64px); }
+.side-inner { display: grid; gap: 20px; }
+@media (min-height: 820px) {
+  .side-inner { position: sticky; top: 28px; }
 }
 .eyebrow {
   display: inline-flex;
@@ -183,23 +188,6 @@ h1 em { color: var(--muted); }
 .lead p:last-child { margin-bottom: 0; }
 .lead strong { color: var(--fg); font-weight: 500; }
 
-.facts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  list-style: none;
-  padding: 0;
-  margin: 24px 0 0;
-}
-.facts li {
-  font-size: 13.5px;
-  color: var(--fg);
-  border: 1px solid var(--line);
-  background: var(--bg-2);
-  border-radius: 999px;
-  padding: 5px 12px;
-}
-
 .portrait {
   margin: 0;
   position: relative;
@@ -225,7 +213,7 @@ h1 em { color: var(--muted); }
 }
 
 /* Innehåll */
-.content { max-width: 720px; padding-bottom: clamp(56px, 8vw, 96px); }
+.content { grid-column: 1; grid-row: 2; max-width: 720px; padding-bottom: clamp(56px, 8vw, 96px); }
 section.block { padding-top: clamp(28px, 4vw, 44px); }
 h2 {
   font-family: var(--serif);
@@ -279,13 +267,13 @@ h2 {
 .quarters p { margin: 4px 0 0; font-size: 15.5px; }
 
 .lia {
-  margin-top: 8px;
   border: 1px solid color-mix(in srgb, #1fc77a 45%, var(--line));
   background: linear-gradient(180deg, color-mix(in srgb, #1fc77a 7%, var(--bg-2)), var(--bg-2));
   border-radius: 20px;
   padding: clamp(20px, 3vw, 28px);
 }
-.lia h2 { margin-bottom: 10px; }
+.lia h2 { font-size: clamp(26px, 2.4vw, 30px); margin-bottom: 10px; }
+.lia p { font-size: 15.5px; }
 .lia p { color: color-mix(in srgb, var(--fg) 82%, var(--muted)); }
 .lia p:last-child { margin-bottom: 0; }
 
@@ -331,10 +319,16 @@ footer .wrap {
 footer a { color: inherit; }
 
 /* Responsivt */
-@media (max-width: 760px) {
-  .hero { grid-template-columns: 1fr; gap: 24px; }
-  .portrait { order: -1; width: clamp(150px, 44vw, 200px); }
+@media (max-width: 820px) {
+  /* En kolumn: bild, inledning, LIA och sedan resten */
+  .page { display: flex; flex-direction: column; }
+  .side, .side-inner { display: contents; }
+  .portrait { order: 1; width: clamp(150px, 44vw, 200px); margin-top: 24px; }
   .portrait img { border-radius: 20px; }
+  .intro { order: 2; padding-top: 24px; }
+  .lia { order: 3; margin-top: 28px; }
+  .content { order: 4; }
+  .lia h2 { font-size: 30px; }
 }
 @media (max-width: 420px) {
   .btn { width: 100%; justify-content: center; }
@@ -368,25 +362,27 @@ footer a { color: inherit; }
   </nav>
 </header>
 
-<main class="wrap">
-  <section class="hero">
-    <div>
-      <p class="eyebrow reveal">Om mig</p>
-      <h1 class="reveal">Jag är Björn <em>Norberg</em></h1>
-      <div class="lead reveal">
-        <p>Jag studerar till VVS-ingenjör på TUC Yrkeshögskola i Huskvarna och har omkring <strong>20 år i byggbranschen</strong> bakom mig. Som plattsättare har jag sett mycket av det som byggs runt omkring. Till slut blev jag nyfiken på hur allt hänger ihop, även det som gömmer sig bakom kaklet.</p>
-        <p>Jag har också en liten ovana. Så fort jag stöter på ett problem börjar hjärnan leta efter en lösning. Ibland räcker det med en snabb googling, ibland slutar det med en hemsida. Här på Junestaden får den ovanan lite utrymme.</p>
-      </div>
-      <ul class="facts reveal" aria-label="Snabbfakta">
-        <li>VVS-student, TUC Yrkeshögskola</li>
-        <li>20 år i byggbranschen</li>
-        <li>Söker LIA v. 33–44, 2027</li>
-      </ul>
+<main class="wrap page">
+  <section class="intro">
+    <p class="eyebrow reveal">Om mig</p>
+    <h1 class="reveal">Jag är Björn <em>Norberg</em></h1>
+    <div class="lead reveal">
+      <p>Jag studerar till VVS-ingenjör på TUC Yrkeshögskola i Huskvarna och har omkring <strong>20 år i byggbranschen</strong> bakom mig. Som plattsättare har jag sett mycket av det som byggs runt omkring. Till slut blev jag nyfiken på hur allt hänger ihop, även det som gömmer sig bakom kaklet.</p>
+      <p>Jag har också en liten ovana. Så fort jag stöter på ett problem börjar hjärnan leta efter en lösning. Ibland räcker det med en snabb googling, ibland slutar det med en hemsida. Här på Junestaden får den ovanan lite utrymme.</p>
     </div>
-    <figure class="portrait reveal">
-      <img src="img/bjorn.webp" alt="Porträtt av Björn Norberg" width="640" height="640" decoding="async">
-    </figure>
   </section>
+
+  <aside class="side" aria-label="Björn och LIA">
+    <div class="side-inner">
+      <figure class="portrait reveal">
+        <img src="img/bjorn.webp" alt="Porträtt av Björn Norberg" width="640" height="640" decoding="async">
+      </figure>
+      <div class="lia reveal" id="lia">
+        <h2>Just nu söker jag LIA</h2>
+        <p>Jag söker LIA-plats inom VVS i Jönköping med omnejd den <strong>16 augusti–5 november 2027, vecka 33–44</strong>. Projektering och energieffektivisering lockar särskilt. Har ni plats för en nyfiken student med byggvana och ett visst intresse för att bygga räknare och se möjligheter i problem? Då hör jag gärna från er.</p>
+      </div>
+    </div>
+  </aside>
 
   <div class="content">
     <section class="block">
@@ -426,13 +422,6 @@ footer a { color: inherit; }
     <section class="block">
       <h2>Det som driver mig</h2>
       <p>Jag tycker om att hjälpa människor med sådant jag själv har stått och kliat mig i huvudet över. Om någon slipper en extra resa eller sparar en stund tack vare ett verktyg blir jag glad. Det är en rätt bra anledning att fortsätta. Kaffe hjälper också.</p>
-    </section>
-
-    <section class="block">
-      <div class="lia" id="lia">
-        <h2>Just nu söker jag LIA</h2>
-        <p>Jag söker LIA-plats inom VVS i Jönköping med omnejd den <strong>16 augusti–5 november 2027, vecka 33–44</strong>. Projektering och energieffektivisering lockar särskilt. Har ni plats för en nyfiken student med byggvana och ett visst intresse för att bygga räknare och se möjligheter i problem? Då hör jag gärna från er.</p>
-      </div>
     </section>
 
     <section class="block" id="kontakt">
