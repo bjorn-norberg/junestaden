@@ -42,8 +42,8 @@
       "@type": "Person",
       "@id": "https://junestaden.se/#person",
       "name": "Björn Norberg",
-      "url": "https://junestaden.se/",
-      "image": "https://bygg.junestaden.se/img/profil.jpg",
+      "url": "https://junestaden.se/om",
+      "image": "https://junestaden.se/img/bjorn.jpg",
       "jobTitle": "Student, VVS-ingenjör",
       "homeLocation": {
         "@type": "Place",
@@ -159,6 +159,7 @@ header.top {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   padding-top: 28px;
 }
 .brand {
@@ -168,6 +169,19 @@ header.top {
   text-decoration: none;
 }
 .brand em { font-style: italic; color: var(--muted); }
+.topnav { display: flex; gap: 4px; }
+.topnav a {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 7px 12px;
+  border-radius: 999px;
+  transition: color .2s, background .2s;
+}
+.topnav a:hover,
+.topnav a:focus-visible { color: var(--fg); background: color-mix(in srgb, var(--fg) 7%, transparent); }
+.topnav a[aria-current="page"] { color: var(--fg); background: color-mix(in srgb, var(--fg) 9%, transparent); }
 
 /* Hero */
 .hero {
@@ -207,6 +221,8 @@ h1 em { color: var(--muted); }
   margin: 0;
 }
 .lead strong { color: var(--fg); font-weight: 500; }
+.lead a.name { text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--fg) 35%, transparent); text-underline-offset: 4px; }
+.lead a.name:hover { text-decoration-color: var(--fg); }
 
 /* Projektkort */
 .projects {
@@ -408,13 +424,17 @@ footer .wrap {
 
 <header class="wrap top">
   <a class="brand" href="/">Junestaden<em>.se</em></a>
+  <nav class="topnav" aria-label="Huvudmeny">
+    <a href="/" aria-current="page">Projekt</a>
+    <a href="/om">Om mig</a>
+  </nav>
 </header>
 
 <main class="wrap">
   <section class="hero">
     <p class="eyebrow reveal">Projekt</p>
     <h1 class="reveal">Webbverktyg för <em>bygg</em> och vardag.</h1>
-    <p class="lead reveal">Jag heter <strong>Björn Norberg</strong> och studerar till VVS-ingenjör i Jönköping. Här samlar jag verktygen jag har byggt. Alla är gratis, kräver ingen inloggning och fungerar lika bra i mobilen som på datorn.</p>
+    <p class="lead reveal">Jag heter <a class="name" href="/om"><strong>Björn Norberg</strong></a> och studerar till VVS-ingenjör i Jönköping. Här samlar jag verktygen jag har byggt. Alla är gratis, kräver ingen inloggning och fungerar lika bra i mobilen som på datorn.</p>
   </section>
 
   <section class="projects" aria-label="Projekt">

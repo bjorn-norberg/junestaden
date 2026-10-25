@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Om mig – Björn Norberg | Junestaden</title>
+<meta name="description" content="Björn Norberg, VVS-student i Jönköping med 20 år i byggbranschen. Om verktygen jag bygger på Junestaden och min LIA-sökning hösten 2027.">
+<meta name="author" content="Björn Norberg">
+<meta name="theme-color" content="#0e1116">
+<link rel="canonical" href="https://junestaden.se/om">
+
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<meta property="og:type" content="profile">
+<meta property="og:locale" content="sv_SE">
+<meta property="og:site_name" content="Junestaden">
+<meta property="og:url" content="https://junestaden.se/om">
+<meta property="og:title" content="Om mig – Björn Norberg">
+<meta property="og:description" content="VVS-student med 20 år i byggbranschen som bygger egna verktyg. Söker LIA i Jönköping med omnejd, 16 augusti–5 november 2027.">
+<meta property="og:image" content="https://junestaden.se/img/og-om.jpg?v=1">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="profile:first_name" content="Björn">
+<meta property="profile:last_name" content="Norberg">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfilePage",
+      "@id": "https://junestaden.se/om#page",
+      "url": "https://junestaden.se/om",
+      "name": "Om mig – Björn Norberg",
+      "inLanguage": "sv-SE",
+      "isPartOf": { "@id": "https://junestaden.se/#website" },
+      "mainEntity": { "@id": "https://junestaden.se/#person" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://junestaden.se/#person",
+      "name": "Björn Norberg",
+      "url": "https://junestaden.se/om",
+      "image": "https://junestaden.se/img/bjorn.jpg",
+      "jobTitle": "Student, VVS-ingenjör",
+      "description": "VVS-student i Jönköping med omkring 20 år i byggbranschen, bland annat som plattsättare. Bygger egna webbverktyg på Junestaden.",
+      "knowsAbout": ["VVS", "Projektering", "Energieffektivisering", "Plattsättning", "Webbverktyg"],
+      "homeLocation": {
+        "@type": "Place",
+        "address": { "@type": "PostalAddress", "addressLocality": "Jönköping", "addressCountry": "SE" }
+      },
+      "affiliation": { "@type": "CollegeOrUniversity", "name": "TUC Yrkeshögskola" },
+      "sameAs": ["https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345"]
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e1116;
+  --bg-2: #141820;
+  --line: #262d38;
+  --fg: #f2efe8;
+  --muted: #9aa3b0;
+  --frame: #2a313c;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -12px rgba(0,0,0,.6);
+  --serif: "Instrument Serif", Georgia, serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Sidan är alltid mörk, oavsett systemets ljusa/mörka läge */
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+body::before {
+  /* svagt ljussken bakom rubriken */
+  content: "";
+  position: fixed;
+  inset: -20vh -10vw auto;
+  height: 70vh;
+  background: radial-gradient(50% 60% at 50% 0%, color-mix(in srgb, var(--fg) 7%, transparent), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+a { color: inherit; }
+
+.wrap {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
+}
+
+/* Topp */
+header.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 28px;
+}
+.brand {
+  font-family: var(--serif);
+  font-size: 26px;
+  letter-spacing: .2px;
+  text-decoration: none;
+}
+.brand em { font-style: italic; color: var(--muted); }
+.topnav { display: flex; gap: 4px; }
+.topnav a {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 7px 12px;
+  border-radius: 999px;
+  transition: color .2s, background .2s;
+}
+.topnav a:hover,
+.topnav a:focus-visible { color: var(--fg); background: color-mix(in srgb, var(--fg) 7%, transparent); }
+.topnav a[aria-current="page"] { color: var(--fg); background: color-mix(in srgb, var(--fg) 9%, transparent); }
+
+/* Hero */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(220px, 26vw, 320px);
+  gap: clamp(32px, 6vw, 80px);
+  align-items: center;
+  padding: clamp(28px, 5vw, 64px) 0 clamp(36px, 5vw, 64px);
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 18px;
+}
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+}
+h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(44px, 7vw, 80px);
+  line-height: 1.02;
+  letter-spacing: -.01em;
+  margin: 0 0 22px;
+}
+h1 em { color: var(--muted); }
+.lead p {
+  font-size: clamp(16.5px, 1.8vw, 18.5px);
+  color: var(--muted);
+  margin: 0 0 14px;
+  max-width: 620px;
+}
+.lead p:last-child { margin-bottom: 0; }
+.lead strong { color: var(--fg); font-weight: 500; }
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 0;
+}
+.facts li {
+  font-size: 13.5px;
+  color: var(--fg);
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  border-radius: 999px;
+  padding: 5px 12px;
+}
+
+.portrait {
+  margin: 0;
+  position: relative;
+}
+.portrait::before {
+  /* varmt sken bakom bilden */
+  content: "";
+  position: absolute;
+  inset: 12% -8% -10%;
+  background: radial-gradient(closest-side, color-mix(in srgb, #ff8a3d 18%, transparent), transparent);
+  filter: blur(18px);
+  z-index: -1;
+}
+.portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+/* Innehåll */
+.content { max-width: 720px; padding-bottom: clamp(56px, 8vw, 96px); }
+section.block { padding-top: clamp(28px, 4vw, 44px); }
+h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(30px, 4vw, 40px);
+  line-height: 1.1;
+  margin: 0 0 14px;
+}
+.content p { color: var(--muted); margin: 0 0 14px; font-size: 16.5px; }
+.content p strong { color: var(--fg); font-weight: 500; }
+
+.quarters { list-style: none; padding: 0; margin: 6px 0 0; display: grid; gap: 12px; }
+.quarters li {
+  --accent: #fff;
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  border-radius: 16px;
+  padding: 16px 18px 16px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.quarters li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent);
+}
+.quarters li[data-site="nordrange"] { --accent: #1fc77a; }
+.quarters li[data-site="vvs"]       { --accent: #ff8a3d; }
+.quarters li[data-site="mangd"]     { --accent: #ffc21a; }
+.quarters li[data-site="epa"]       { --accent: #d4ff3a; }
+.quarters a {
+  font-family: var(--serif);
+  font-size: 24px;
+  line-height: 1.2;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.quarters a::after {
+  content: "↗";
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--muted);
+  transition: color .2s, translate .2s;
+}
+.quarters a:hover::after,
+.quarters a:focus-visible::after { color: var(--accent); translate: 2px -2px; }
+.quarters p { margin: 4px 0 0; font-size: 15.5px; }
+
+.lia {
+  margin-top: 8px;
+  border: 1px solid color-mix(in srgb, #1fc77a 45%, var(--line));
+  background: linear-gradient(180deg, color-mix(in srgb, #1fc77a 7%, var(--bg-2)), var(--bg-2));
+  border-radius: 20px;
+  padding: clamp(20px, 3vw, 28px);
+}
+.lia h2 { margin-bottom: 10px; }
+.lia p { color: color-mix(in srgb, var(--fg) 82%, var(--muted)); }
+.lia p:last-child { margin-bottom: 0; }
+
+.buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 600 15.5px var(--sans);
+  text-decoration: none;
+  padding: 13px 20px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, color .2s, top .2s;
+  position: relative;
+  top: 0;
+}
+.btn svg { width: 18px; height: 18px; flex: none; }
+.btn:hover, .btn:focus-visible { top: -2px; }
+.btn-mail { background: var(--fg); color: #111; }
+.btn-mail:hover, .btn-mail:focus-visible { background: #fff; }
+.btn-in { background: transparent; color: var(--fg); border-color: var(--line); }
+.btn-in svg { color: #4a9fe8; }
+.btn-in:hover, .btn-in:focus-visible { border-color: #4a9fe8; background: color-mix(in srgb, #0a66c2 18%, transparent); }
+.btn:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+.nojs { font-size: 14px; color: var(--muted); margin-top: 10px; }
+
+footer {
+  margin-top: auto;
+  border-top: 1px solid var(--line);
+}
+footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-top: 24px;
+  padding-bottom: 32px;
+  font-size: 14px;
+  color: var(--muted);
+}
+footer a { color: inherit; }
+
+/* Responsivt */
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; gap: 24px; }
+  .portrait { order: -1; width: clamp(150px, 44vw, 200px); }
+  .portrait img { border-radius: 20px; }
+}
+@media (max-width: 420px) {
+  .btn { width: 100%; justify-content: center; }
+}
+
+/* Intro-animation. Innehållet syns alltid om animationen inte körs:
+   klassen sätts bara med JS och tas bort efter 1,5 s oavsett. */
+@media (prefers-reduced-motion: no-preference) {
+  .anim .reveal { animation: rise .9s cubic-bezier(.2,.7,.2,1) backwards; }
+  .anim .reveal:nth-child(2) { animation-delay: .08s; }
+  .anim .reveal:nth-child(3) { animation-delay: .16s; }
+  .anim .portrait.reveal { animation-delay: .2s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn, .quarters a::after { transition: none; }
+}
+</style>
+<script>
+  document.documentElement.classList.add('anim');
+  setTimeout(function () { document.documentElement.classList.remove('anim'); }, 1500);
+</script>
+</head>
+<body>
+
+<header class="wrap top">
+  <a class="brand" href="/">Junestaden<em>.se</em></a>
+  <nav class="topnav" aria-label="Huvudmeny">
+    <a href="/">Projekt</a>
+    <a href="/om" aria-current="page">Om mig</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div>
+      <p class="eyebrow reveal">Om mig</p>
+      <h1 class="reveal">Jag är Björn <em>Norberg</em></h1>
+      <div class="lead reveal">
+        <p>Jag studerar till VVS-ingenjör på TUC Yrkeshögskola i Huskvarna och har omkring <strong>20 år i byggbranschen</strong> bakom mig. Som plattsättare har jag sett mycket av det som byggs runt omkring. Till slut blev jag nyfiken på hur allt hänger ihop, även det som gömmer sig bakom kaklet.</p>
+        <p>Jag har också en liten ovana. Så fort jag stöter på ett problem börjar hjärnan leta efter en lösning. Ibland räcker det med en snabb googling, ibland slutar det med en hemsida. Här på Junestaden får den ovanan lite utrymme.</p>
+      </div>
+      <ul class="facts reveal" aria-label="Snabbfakta">
+        <li>VVS-student, TUC Yrkeshögskola</li>
+        <li>20 år i byggbranschen</li>
+        <li>Söker LIA v. 33–44, 2027</li>
+      </ul>
+    </div>
+    <figure class="portrait reveal">
+      <img src="img/bjorn.webp" alt="Porträtt av Björn Norberg" width="640" height="640" decoding="async">
+    </figure>
+  </section>
+
+  <div class="content">
+    <section class="block">
+      <h2>Hur det blev en hel stad</h2>
+      <p>Det började med ett litet problem. Sedan ett till. En gammal MacBook som nog hade räknat med en lugn pension fick bli server. Verktygen blev fler, och till slut behövdes en plats som höll ihop alltsammans.</p>
+      <p>Då blev det Junestaden. Jag är uppvuxen i och kring Jönköping, så namnet kändes hemma. Varje verktyg fick bli ett eget kvarter. Några handlar om bygget, andra om resan dit. Stadsplaneringen är fortfarande lite pågående.</p>
+    </section>
+
+    <section class="block">
+      <h2>En sväng genom kvarteren</h2>
+      <ul class="quarters">
+        <li data-site="nordrange">
+          <a href="https://nordrange.se">Nordrange</a>
+          <p>För dig som undrar om batteriet räcker till Trondheim. Det gör det, men du får fika tre gånger på vägen. Välj själv bland 20 laddnätverk och se var du ska stanna.</p>
+        </li>
+        <li data-site="vvs">
+          <a href="https://vvs.junestaden.se">Formelkollen</a>
+          <p>Samlar VVS-formler och räknare, bland annat för tryckfall. För oss som gärna vill hitta rätt formel innan vi glömt vad vi skulle räkna på.</p>
+        </li>
+        <li data-site="mangd">
+          <a href="https://bygg.junestaden.se">Mängdkollen</a>
+          <p>Hjälper dig att uppskatta hur många säckar som behövs innan du åker till bygghandeln. Efter många år vet jag att ”det borde räcka” kan bli en ganska lång omväg.</p>
+        </li>
+        <li data-site="epa">
+          <a href="https://epa.junestaden.se">EPAkollen</a>
+          <p>Räknar ut hur lång tid en resa tar med EPA-traktor på 30 km/h och vad den kostar. Svar: längre än du tror, så ta med snacks.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="block">
+      <h2>Så tänker jag när jag bygger</h2>
+      <p>Verktygen ska vara gratis, fungera utan konto och vara enkla att använda i mobilen. Du ska kunna få hjälp med en uträkning utan att först bli medlem i ännu en sak.</p>
+      <p>Där det går använder jag tillverkarnas egna värden och länkar till källan. Förutsättningar och begränsningar ska framgå, så att du vet vad svaret bygger på. En snygg siffra är ju inte mycket värd om den räknar fel.</p>
+    </section>
+
+    <section class="block">
+      <h2>Det som driver mig</h2>
+      <p>Jag tycker om att hjälpa människor med sådant jag själv har stått och kliat mig i huvudet över. Om någon slipper en extra resa eller sparar en stund tack vare ett verktyg blir jag glad. Det är en rätt bra anledning att fortsätta. Kaffe hjälper också.</p>
+    </section>
+
+    <section class="block">
+      <div class="lia" id="lia">
+        <h2>Just nu söker jag LIA</h2>
+        <p>Jag söker LIA-plats inom VVS i Jönköping med omnejd den <strong>16 augusti–5 november 2027, vecka 33–44</strong>. Projektering och energieffektivisering lockar särskilt. Har ni plats för en nyfiken student med byggvana och ett visst intresse för att bygga räknare och se möjligheter i problem? Då hör jag gärna från er.</p>
+      </div>
+    </section>
+
+    <section class="block" id="kontakt">
+      <h2>Hör av dig</h2>
+      <p>Har du en idé, hittat något som räknar tokigt eller vill du bara säga hej?</p>
+      <p>Mejla mig eller hitta mig på LinkedIn.</p>
+      <div class="buttons">
+        <!-- Adressen sätts ihop med JS så att den inte står i klartext för spambottar -->
+        <a class="btn btn-mail" id="mailbtn" href="#kontakt" data-u="bjorn.jkpg" data-d="gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg>
+          Mejla mig
+        </a>
+        <a class="btn btn-in" href="https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345" rel="me noopener" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+      <noscript><p class="nojs">Mejladress: bjorn.jkpg (snabel-a) gmail.com</p></noscript>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Junestaden</span>
+    <span><a href="/">Alla projekt</a></span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+(function () {
+  var b = document.getElementById('mailbtn');
+  b.href = 'mailto:' + b.dataset.u + '@' + b.dataset.d + '?subject=' + encodeURIComponent('Hej från Junestaden');
+})();
+</script>
+</body>
+</html>

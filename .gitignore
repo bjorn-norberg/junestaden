@@ -3,3 +3,7 @@
 forhandsvisning*.png
 Thumbs.db
 .DS_Store
+
+# Textutkast i Word (privata, publiceras inte)
+design/*.docx
+~$*
