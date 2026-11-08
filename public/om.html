@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Om mig – Björn Norberg | Junestaden</title>
-<meta name="description" content="Björn Norberg, VVS-student i Jönköping med 20 år i byggbranschen. Om verktygen jag bygger på Junestaden och min LIA-sökning hösten 2027.">
+<meta name="description" content="Björn Norberg, VVS-student i Jönköping med 20 år i byggbranschen. Om verktygen jag bygger på Junestaden och varför.">
 <meta name="author" content="Björn Norberg">
 <meta name="theme-color" content="#0e1116">
 <link rel="canonical" href="https://junestaden.se/om">
@@ -19,8 +19,8 @@
 <meta property="og:site_name" content="Junestaden">
 <meta property="og:url" content="https://junestaden.se/om">
 <meta property="og:title" content="Om mig – Björn Norberg">
-<meta property="og:description" content="VVS-student med 20 år i byggbranschen som bygger egna verktyg. Söker LIA i Jönköping med omnejd, 16 augusti–5 november 2027.">
-<meta property="og:image" content="https://junestaden.se/img/og-om.jpg?v=1">
+<meta property="og:description" content="VVS-student med 20 år i byggbranschen som bygger egna verktyg för bygg och vardag.">
+<meta property="og:image" content="https://junestaden.se/img/og-om.jpg?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="profile:first_name" content="Björn">
@@ -140,7 +140,7 @@ header.top {
 .topnav a:focus-visible { color: var(--fg); background: color-mix(in srgb, var(--fg) 7%, transparent); }
 .topnav a[aria-current="page"] { color: var(--fg); background: color-mix(in srgb, var(--fg) 9%, transparent); }
 
-/* Sidlayout: text till vänster, bild och LIA i en högerspalt som följer med vid scroll */
+/* Sidlayout: text till vänster, porträtt i en högerspalt som följer med vid scroll */
 .page {
   display: grid;
   grid-template-columns: minmax(0, 1fr) clamp(280px, 28vw, 360px);
@@ -153,9 +153,9 @@ header.top {
   display: flex; flex-direction: column; gap: 20px;
   padding-top: clamp(28px, 5vw, 64px);
 }
-/* Bilden scrollar med sidan, LIA-rutan stannar kvar i bild hela vägen ner */
+/* Porträttet följer med när man scrollar */
 .side-inner { display: contents; }
-.lia { position: sticky; top: 24px; }
+.portrait { position: sticky; top: 24px; }
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -269,17 +269,6 @@ h2 {
 .quarters a:focus-visible::after { color: var(--accent); translate: 2px -2px; }
 .quarters p { margin: 4px 0 0; font-size: 15.5px; }
 
-.lia {
-  border: 1px solid color-mix(in srgb, #1fc77a 45%, var(--line));
-  background: linear-gradient(180deg, color-mix(in srgb, #1fc77a 7%, var(--bg-2)), var(--bg-2));
-  border-radius: 20px;
-  padding: clamp(20px, 3vw, 28px);
-}
-.lia h2 { font-size: clamp(26px, 2.4vw, 30px); margin-bottom: 10px; }
-.lia p { font-size: 15.5px; }
-.lia p { color: color-mix(in srgb, var(--fg) 82%, var(--muted)); }
-.lia p:last-child { margin-bottom: 0; }
-
 .buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
 .btn {
   display: inline-flex;
@@ -323,15 +312,13 @@ footer a { color: inherit; }
 
 /* Responsivt */
 @media (max-width: 820px) {
-  /* En kolumn: bild, inledning, LIA och sedan resten */
+  /* En kolumn: bild, inledning och sedan resten */
   .page { display: flex; flex-direction: column; }
   .side, .side-inner { display: contents; }
-  .portrait { order: 1; width: clamp(150px, 44vw, 200px); margin-top: 24px; }
+  .portrait { order: 1; width: clamp(150px, 44vw, 200px); margin-top: 24px; position: static; }
   .portrait img { border-radius: 20px; }
   .intro { order: 2; padding-top: 24px; }
-  .lia { order: 3; margin-top: 28px; position: static; }
-  .content { order: 4; }
-  .lia h2 { font-size: 30px; }
+  .content { order: 3; }
 }
 @media (max-width: 420px) {
   .btn { width: 100%; justify-content: center; }
@@ -375,15 +362,11 @@ footer a { color: inherit; }
     </div>
   </section>
 
-  <aside class="side" aria-label="Björn och LIA">
+  <aside class="side" aria-label="Porträtt">
     <div class="side-inner">
       <figure class="portrait reveal">
         <img src="img/bjorn.webp" alt="Porträtt av Björn Norberg" width="640" height="640" decoding="async">
       </figure>
-      <div class="lia reveal" id="lia">
-        <h2>Just nu söker jag LIA</h2>
-        <p>Jag söker LIA-plats inom VVS i Jönköping med omnejd den <strong>16 augusti–5 november 2027, vecka 33–44</strong>. Projektering och energieffektivisering lockar särskilt. Har ni plats för en nyfiken student med byggvana och ett visst intresse för att bygga räknare och se möjligheter i problem? Då hör jag gärna från er.</p>
-      </div>
     </div>
   </aside>
 
