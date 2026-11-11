@@ -7,3 +7,7 @@ Thumbs.db
 # Textutkast i Word (privata, publiceras inte)
 design/*.docx
 ~$*
+design/_ut/
+
+# Lokala överlämningsinstruktioner med konton och serveruppgifter (repot är publikt)
+INSTRUKTIONER.md
