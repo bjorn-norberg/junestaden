@@ -3,5 +3,11 @@
 name = "junestaden"
 compatibility_date = "2026-10-01"
 
+# Workern (src/worker.js) sköter /api/rss, RSS-proxyn för nyhetssidan.
+main = "src/worker.js"
+
 [assets]
 directory = "./public"
+binding = "ASSETS"
+# Bara /api/* går till workern. Allt annat serveras direkt som statiska filer, precis som förut.
+run_worker_first = ["/api/*"]
