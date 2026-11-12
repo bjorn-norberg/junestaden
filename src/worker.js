@@ -35,6 +35,8 @@ const FEEDS = {
 const ALLOWED = new Set([
   ...Object.values(SOURCES).map(s => new URL(s.url).hostname),
   "news.google.com",
+  /* Expressens artikelsidor. Nyhetssidan hämtar delningsbilden därifrån, eftersom Expressens flöden saknar bilder. */
+  "www.expressen.se",
 ]);
 const CACHE_SECONDS = 300;
 const TIMEOUT_MS = 8000;
