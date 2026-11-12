@@ -25,6 +25,8 @@ const SOURCES = {
   di: { name: "Dagens industri", url: "https://www.di.se/rss" },
   svtgolf: { name: "SVT Sport", url: "https://www.svt.se/sport/golf/rss.xml" },
   svenskgolf: { name: "Svensk Golf", url: "https://www.svenskgolf.se/kategori/nyheter/feed/" },
+  /* Huvudflödet har även tour-nyheter, utrustning och TV-tider, som saknas i kategorin Nyheter. */
+  svenskgolfall: { name: "Svensk Golf", url: "https://www.svenskgolf.se/feed/" },
 };
 /* Grupper (flikarna på nyhetssidan). Ny grupp, t.ex. golf: lägg till källor ovan och en rad här. */
 const FEEDS = {
@@ -32,7 +34,7 @@ const FEEDS = {
   varlden: { sources: ["nyt", "guardian"], max: 31 },
   hockey: { sources: ["exphockey", "shl"], videos: ["shlklipp"], max: 25 },
   bors: { sources: ["di"], max: 20 },
-  golf: { sources: ["svtgolf", "svenskgolf"], max: 25 },
+  golf: { sources: ["svtgolf", "svenskgolf", "svenskgolfall"], max: 31 },
 };
 
 const ALLOWED = new Set([
