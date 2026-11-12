@@ -23,6 +23,8 @@ const SOURCES = {
   shl: { name: "SHL", url: "https://www.shl.se/api/articles/rss" },
   shlklipp: { name: "SHL", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCUMwsAsbK-SsW5GHufJJFUA", video: true, filter: /highlights/i },
   di: { name: "Dagens industri", url: "https://www.di.se/rss" },
+  svtgolf: { name: "SVT Sport", url: "https://www.svt.se/sport/golf/rss.xml" },
+  svenskgolf: { name: "Svensk Golf", url: "https://www.svenskgolf.se/kategori/nyheter/feed/" },
 };
 /* Grupper (flikarna på nyhetssidan). Ny grupp, t.ex. golf: lägg till källor ovan och en rad här. */
 const FEEDS = {
@@ -30,6 +32,7 @@ const FEEDS = {
   varlden: { sources: ["nyt", "guardian"], max: 31 },
   hockey: { sources: ["exphockey", "shl"], videos: ["shlklipp"], max: 25 },
   bors: { sources: ["di"], max: 20 },
+  golf: { sources: ["svtgolf", "svenskgolf"], max: 25 },
 };
 
 const ALLOWED = new Set([
