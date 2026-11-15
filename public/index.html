@@ -20,7 +20,7 @@
 <meta property="og:url" content="https://junestaden.se/">
 <meta property="og:title" content="Junestaden – webbverktyg för bygg och vardag">
 <meta property="og:description" content="Nordrange, Formelkollen, Mängdkollen och EPAkollen – gratis webbverktyg för elbilsresor, VVS-formler, materialåtgång och EPA-resor. Utan inloggning, i mobilen och på datorn.">
-<meta property="og:image" content="https://junestaden.se/img/og.jpg?v=9">
+<meta property="og:image" content="https://junestaden.se/img/og.jpg?v=10">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -329,6 +329,8 @@ h2 {
   margin: 0 0 14px;
   font-size: 15.5px;
 }
+/* Kort beskrivning som bara visas på mobilen, där den långa texten inte får plats */
+.short { display: none; }
 .url {
   font-size: 13px;
   font-weight: 500;
@@ -438,6 +440,7 @@ footer .wrap {
   h2 { font-size: 21px; }
   .tag { font-size: 10.5px; margin-bottom: 3px; }
   .desc, .url, .arrow { display: none; }
+  .short { display: block; margin: 5px 0 0; font-size: 13.5px; line-height: 1.4; color: var(--muted); }
   .foot-rich { grid-template-columns: 1fr 1fr; padding-top: 32px; }
   .foot-rich .fabout { grid-column: 1 / -1; }
 }
@@ -492,6 +495,7 @@ footer .wrap {
           <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
         </div>
         <p class="desc">Ruttplanerare för elbil. Ange bil, batterinivå och resmål, så visar Nordrange var du ska ladda. Välj själv bland 20 laddnätverk i Sverige, Norge, Danmark och Finland.</p>
+        <p class="short">Ruttplanerare för elbil</p>
         <span class="url">nordrange.se</span>
       </div>
     </a>
@@ -507,6 +511,7 @@ footer .wrap {
           <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
         </div>
         <p class="desc">VVS-formelsamling för ventilation, värme, pumpar och tappvatten med inbyggda räknare, enhetsomvandlare och tryckfallskalkylatorer för rör och kanaler.</p>
+        <p class="short">VVS-formler och räknare</p>
         <span class="url">vvs.junestaden.se</span>
       </div>
     </a>
@@ -522,6 +527,7 @@ footer .wrap {
           <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
         </div>
         <p class="desc">Räkna rätt mängd avjämning, fix och fogbruk innan du åker till bygghandeln. Kilo, säckar och vatten utifrån tillverkarens egna åtgångsvärden.</p>
+        <p class="short">Räkna avjämning, fix och fog</p>
         <span class="url">bygg.junestaden.se</span>
       </div>
     </a>
@@ -537,6 +543,7 @@ footer .wrap {
           <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
         </div>
         <p class="desc">Räkna ut restid och bränslekostnad för din EPA-traktor. Rutten undviker motorvägar, räknas på 30&nbsp;km/h och använder dagens bensinpris.</p>
+        <p class="short">Restid och kostnad för EPA</p>
         <span class="url">epa.junestaden.se</span>
       </div>
     </a>

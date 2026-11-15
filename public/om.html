@@ -303,12 +303,49 @@ footer .wrap {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 8px 24px;
-  padding-top: 24px;
   padding-bottom: 32px;
   font-size: 14px;
   color: var(--muted);
 }
 footer a { color: inherit; }
+.foot-rich {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) repeat(2, minmax(0, 1fr));
+  gap: 28px 40px;
+  padding: 40px 0 28px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14.5px;
+}
+.foot-rich .fbrand { font-family: var(--serif); font-size: 24px; color: var(--fg); text-decoration: none; }
+.foot-rich .fbrand em { font-style: italic; color: var(--muted); }
+.foot-rich p { margin: 8px 0 0; max-width: 340px; }
+.foot-rich h3 { margin: 4px 0 10px; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.foot-rich ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.foot-rich li a { color: var(--fg); text-decoration: none; }
+.foot-rich li a:hover,
+.foot-rich li a:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+.foot-rich li i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 9px; vertical-align: 1px; }
+.byline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.social {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin: -4px 0;
+  border-radius: 7px;
+  color: var(--muted);
+  transition: color .25s, background .25s;
+}
+.social svg { width: 16px; height: 16px; }
+.social:hover,
+.social:focus-visible { color: var(--fg); background: color-mix(in srgb, var(--fg) 8%, transparent); }
+
 
 /* Responsivt */
 @media (max-width: 820px) {
@@ -319,6 +356,10 @@ footer a { color: inherit; }
   .portrait img { border-radius: 20px; }
   .intro { order: 2; padding-top: 24px; }
   .content { order: 3; }
+}
+@media (max-width: 640px) {
+  .foot-rich { grid-template-columns: 1fr 1fr; padding-top: 32px; }
+  .foot-rich .fabout { grid-column: 1 / -1; }
 }
 @media (max-width: 420px) {
   .btn { width: 100%; justify-content: center; }
@@ -432,8 +473,33 @@ footer a { color: inherit; }
 
 <footer>
   <div class="wrap">
+    <div class="foot-rich">
+      <div class="fabout">
+        <a class="fbrand" href="/">Junestaden<em>.se</em></a>
+        <p>Gratis webbverktyg för bygg och vardag. Ingen inloggning, ingen reklam.</p>
+      </div>
+      <nav aria-label="Verktyg">
+        <h3>Verktyg</h3>
+        <ul>
+          <li><a href="https://nordrange.se"><i style="background:#1fc77a"></i>Nordrange</a></li>
+          <li><a href="https://vvs.junestaden.se"><i style="background:#ff8a3d"></i>Formelkollen</a></li>
+          <li><a href="https://bygg.junestaden.se"><i style="background:#ffc21a"></i>Mängdkollen</a></li>
+          <li><a href="https://epa.junestaden.se"><i style="background:#d4ff3a"></i>EPAkollen</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Mer">
+        <h3>Mer</h3>
+        <ul>
+          <li><a href="/om">Om mig</a></li>
+          <li><a href="/om#kontakt">Kontakt</a></li>
+          <li><a href="https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345" rel="me noopener" target="_blank">LinkedIn</a></li>
+        </ul>
+      </nav>
+    </div>
     <span>© <span id="year">2026</span> Junestaden</span>
-    <span><a href="/">Alla projekt</a></span>
+    <span class="byline">Byggt i Jönköping av <a href="https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345" rel="author me noopener" target="_blank">Björn Norberg</a>
+      <a class="social" href="https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345" rel="me noopener" target="_blank" aria-label="Björn Norberg på LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
+    </span>
   </div>
 </footer>
 
