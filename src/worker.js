@@ -21,6 +21,10 @@ const SOURCES = {
   guardian: { name: "The Guardian", url: "https://www.theguardian.com/international/rss" },
   exphockey: { name: "Expressen", url: "https://feeds.expressen.se/hockey/" },
   shl: { name: "SHL", url: "https://www.shl.se/api/articles/rss" },
+  /* SHL:s egna höjdpunktsklipp (shl.se/highlights). De läggs ut direkt efter matcherna, många timmar före YouTube.
+     Det är ett JSON-flöde, inte RSS, och tolkas av shlVideos() längre ner. */
+  shlvideo: { name: "SHL", kind: "shlvideo", url: "https://www.shl.se/api/feeds?page=0&pageSize=12&contentTypes=videos&requiredTags=custom.highlights&siteInstanceIds=shl1_shl&showHiddenItems=false" },
+  /* YouTube-kanalen: reserv om shl.se inte svarar. */
   shlklipp: { name: "SHL", url: "https://www.youtube.com/feeds/videos.xml?channel_id=UCUMwsAsbK-SsW5GHufJJFUA", video: true, filter: /highlights/i },
   di: { name: "Dagens industri", url: "https://www.di.se/rss" },
   svtgolf: { name: "SVT Sport", url: "https://www.svt.se/sport/golf/rss.xml" },
@@ -32,7 +36,9 @@ const SOURCES = {
 const FEEDS = {
   sverige: { sources: ["expressen", "svd", "dn", "jp"], max: 31 },
   varlden: { sources: ["nyt", "guardian"], max: 31 },
-  hockey: { sources: ["exphockey", "shl"], videos: ["shlklipp"], max: 25 },
+  hockey: { sources: ["exphockey", "shl"], videos: ["shlvideo"], videosFallback: ["shlklipp"], max: 25 },
+  /* Bara höjdpunktsklippen, för fliken SHL Highlights på Nyhetsläget. */
+  shlklipp: { sources: [], videos: ["shlvideo"], videosFallback: ["shlklipp"], max: 0, maxVideos: 12 },
   bors: { sources: ["di"], max: 20 },
   golf: { sources: ["svtgolf", "svenskgolf", "svenskgolfall"], max: 31 },
 };
@@ -147,12 +153,13 @@ async function news(request, ctx) {
 
   /* Den färdiga listan cachas också, så att flödena inte tolkas om vid varje besök. */
   const cache = caches.default;
-  const key = new Request("https://news-cache.junestaden.se/v1/" + id);
+  const key = new Request("https://news-cache.junestaden.se/v2/" + id);
   const hit = await cache.match(key);
   if (hit) return hit;
 
   const load = async sid => {
     const s = SOURCES[sid];
+    if (s.kind === "shlvideo") return shlVideos(s, ctx);
     const r = await getFeed(s.url, ctx);
     if (r.error) return [];
     let items = parseFeed(new TextDecoder("utf-8").decode(r.body), PER_SOURCE);
@@ -163,12 +170,16 @@ async function news(request, ctx) {
   const merge = async ids => {
     const seen = new Set();
     return (await Promise.all(ids.map(load))).flat()
-      .filter(i => i.date && !seen.has(i.title) && seen.add(i.title))
-      .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+      /* Dubbletter tas bort på titel. Klipp har en egen nyckel, eftersom samma lag kan mötas flera gånger. */
+      .filter(i => i.title && i.date && !seen.has(i.key || i.title) && seen.add(i.key || i.title))
+      .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
+      .map(({ title, link, date, img, by }) => ({ title, link, date, img, by }));
   };
 
   const items = (await merge(feed.sources)).slice(0, feed.max);
-  const videos = feed.videos ? (await merge(feed.videos)).slice(0, 8) : [];
+  let videos = feed.videos ? await merge(feed.videos) : [];
+  if (!videos.length && feed.videosFallback) videos = await merge(feed.videosFallback);
+  videos = videos.slice(0, feed.maxVideos || 8);
   if (!items.length && !videos.length) return reply(502, "Inga flöden svarade");
 
   const res = new Response(JSON.stringify({ feed: id, updated: new Date().toISOString(), items, videos }), {
@@ -182,6 +193,39 @@ async function news(request, ctx) {
   });
   ctx.waitUntil(cache.put(key, res.clone()));
   return res;
+}
+
+/* SHL:s höjdpunktsklipp. Flödet ger id, rubrik ("Luleå Hockey - Färjestad BK") och tid. Miniatyrbilden hämtas
+   per klipp från /api/media/render. Länken går till Staylives spelare, som visar klippet fristående.
+   Låsta klipp (kräver inloggning) tas inte med. */
+async function shlVideos(s, ctx) {
+  const text = b => new TextDecoder("utf-8").decode(b);
+  const r = await getFeed(s.url, ctx);
+  if (r.error) return [];
+  let list;
+  try { list = JSON.parse(text(r.body)); } catch { return []; }
+  if (!Array.isArray(list)) return [];
+  const clips = list
+    .filter(v => v && v.type === "video" && !v.locked && /^video\|staylive\|\d+$/.test(String(v.mainMedia || v.id)))
+    .slice(0, 12);
+  return Promise.all(clips.map(async v => {
+    const media = String(v.mainMedia || v.id);
+    let img = "";
+    const m = await getFeed("https://www.shl.se/api/media/render?mediaString=" + encodeURIComponent(media) + "&isCroppingEnabled=true", ctx);
+    if (!m.error) {
+      try {
+        const u = new URL(JSON.parse(text(m.body)).url);
+        if (u.protocol === "https:" && u.hostname === "video-images-cdn.staylive.tv") { u.searchParams.set("width", "640"); img = u.href; }
+      } catch {}
+    }
+    const d = new Date(v.publishedAt);
+    return {
+      title: clean(String(v.header || "")),
+      link: "https://embed.staylive.tv/video/" + media.split("|").pop(),
+      date: isNaN(d) ? null : d.toISOString(),
+      img, by: s.name, key: media,
+    };
+  }));
 }
 
 /* ============ Tolkning av RSS och Atom ============
