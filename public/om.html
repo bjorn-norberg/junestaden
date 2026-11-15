@@ -288,9 +288,10 @@ h2 {
 .btn:hover, .btn:focus-visible { top: -2px; }
 .btn-mail { background: var(--fg); color: #111; }
 .btn-mail:hover, .btn-mail:focus-visible { background: #fff; }
-.btn-in { background: transparent; color: var(--fg); border-color: var(--line); }
+/* Svagt blå fyllning och blåtonad ram även utan hover, så att knappen inte försvinner mot bakgrunden */
+.btn-in { background: color-mix(in srgb, #0a66c2 16%, var(--bg-2)); color: var(--fg); border-color: color-mix(in srgb, #4a9fe8 50%, var(--line)); }
 .btn-in svg { color: #4a9fe8; }
-.btn-in:hover, .btn-in:focus-visible { border-color: #4a9fe8; background: color-mix(in srgb, #0a66c2 18%, transparent); }
+.btn-in:hover, .btn-in:focus-visible { border-color: #4a9fe8; background: color-mix(in srgb, #0a66c2 32%, var(--bg-2)); }
 .btn:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
 .nojs { font-size: 14px; color: var(--muted); margin-top: 10px; }
 
@@ -311,8 +312,9 @@ footer a { color: inherit; }
 .foot-rich {
   width: 100%;
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) repeat(2, minmax(0, 1fr));
-  gap: 28px 40px;
+  /* Kolumnerna Verktyg och Mer ligger mot högerkanten, så att Mer slutar där linjen under slutar */
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 28px clamp(48px, 7vw, 104px);
   padding: 40px 0 28px;
   margin-bottom: 14px;
   border-bottom: 1px solid var(--line);
