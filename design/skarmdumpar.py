@@ -109,7 +109,15 @@ async def epa(p, tmp):
     await sida.fill("#depart", "09:00")
     await sida.evaluate("document.activeElement && document.activeElement.blur()")   # släpp fokus så att fältet inte ser redigerat ut
     await sida.wait_for_timeout(600)
-    await sida.evaluate("window.scrollTo(0, 285)")   # Vägval-knapparna överst, kostnadskortet längre ned
+    # Kortet "Ditt fordon" överst, sedan kartan, vägvalen och kostnadskortet. Hittas inte rubriken används ett fast läge.
+    await sida.evaluate("""() => {
+        const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        let n, y = 445;
+        while ((n = w.nextNode())) {
+            if (n.textContent.trim() === 'Ditt fordon') { y = window.scrollY + n.parentElement.getBoundingClientRect().top - 16; break; }
+        }
+        window.scrollTo(0, y);
+    }""")
     await sida.wait_for_timeout(900)
     await sida.screenshot(path=str(tmp / "epa.png"))
     await b.close()
