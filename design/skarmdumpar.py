@@ -1,21 +1,21 @@
-"""Återskapar startsidans telefonbilder (public/img/*.webp) och delningsbilderna (og.jpg, og-om.jpg).
+"""Återskapar startsidans telefonbilder (public/img/*.webp) och delningsbilden (og.jpg).
 
 Körning (från mappen Junestaden):
     python design/skarmdumpar.py nordrange            en bild
-    python design/skarmdumpar.py alla                 alla fyra telefonbilder + båda delningsbilderna
-    python design/skarmdumpar.py og og-om             bara delningsbilderna
+    python design/skarmdumpar.py alla                 alla fyra telefonbilder + delningsbilden
+    python design/skarmdumpar.py og                   bara delningsbilden
     python design/skarmdumpar.py epa --skriv          skriv direkt till public/img/ (annars till design/_ut/)
 
 Krav: Python 3.10+, `pip install playwright pillow`, och Microsoft Edge installerat
 (Playwright startas med channel="msedge", så ingen separat webbläsare behöver hämtas).
 
-Skripten går mot de LIVE-sajterna (https://nordrange.se, epa.junestaden.se, bygg.junestaden.se,
-vvs.junestaden.se), så internet krävs. Delningsbilderna ritas från design/og.html och design/og-om.html,
-som i sin tur läser bilderna i public/img/. Kör därför först telefonbilderna och sedan delningsbilderna.
+Skriptet går mot de LIVE-sajterna (https://nordrange.se, epa.junestaden.se, bygg.junestaden.se,
+vvs.junestaden.se), så internet krävs. Delningsbilden ritas från design/og.html,
+som i sin tur läser bilderna i public/img/. Kör därför först telefonbilderna och sedan delningsbilden.
 
-Bildformat (se INSTRUKTIONER.md): telefonbilder 600 x 1298 WebP (kvalitet 82), delningsbilder 1200 x 630 JPG (kvalitet 92).
+Bildformat (se INSTRUKTIONER.md): telefonbilder 600 x 1298 WebP (kvalitet 82), delningsbild 1200 x 630 JPG (kvalitet 92).
 Bara övre ~65 % av varje telefonbild syns på startsidans kort, så det viktiga ska ligga högt upp.
-Höj ?v= på og:image i public/index.html respektive public/om.html när en delningsbild byts.
+Höj ?v= på og:image i både public/index.html och public/om.html när delningsbilden byts (Om mig använder samma bild).
 """
 import asyncio
 import os
@@ -172,7 +172,7 @@ TELEFON = {"nordrange": (nordrange, "nordrange.png", "nordrange.webp"),
            "epa": (epa, "epa.png", "epa.webp"),
            "mangd": (mangd, "mangdkollen.png", "mangdkollen.webp"),
            "vvs": (vvs, "vvs.png", "vvs.webp")}
-DELNING = {"og": ("og.html", "og.jpg"), "og-om": ("og-om.html", "og-om.jpg")}
+DELNING = {"og": ("og.html", "og.jpg")}
 
 
 async def main(argv):
