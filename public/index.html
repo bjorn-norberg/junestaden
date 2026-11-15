@@ -160,7 +160,7 @@ header.top {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding-top: 28px;
+  padding-top: 20px;
 }
 .brand {
   font-family: var(--serif);
@@ -185,8 +185,8 @@ header.top {
 
 /* Hero */
 .hero {
-  padding: clamp(24px, 4vw, 48px) 0 clamp(32px, 4.5vw, 56px);
-  max-width: 760px;
+  padding: clamp(14px, 2.2vw, 26px) 0 clamp(22px, 2.8vw, 34px);
+  max-width: 940px;
 }
 .eyebrow {
   display: inline-flex;
@@ -197,7 +197,7 @@ header.top {
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--muted);
-  margin: 0 0 18px;
+  margin: 0 0 12px;
 }
 .eyebrow::before {
   content: "";
@@ -208,16 +208,16 @@ header.top {
 h1 {
   font-family: var(--serif);
   font-weight: 400;
-  font-size: clamp(42px, 7.5vw, 84px);
+  font-size: clamp(38px, 5.4vw, 64px);
   line-height: 1.02;
   letter-spacing: -.01em;
-  margin: 0 0 20px;
+  margin: 0 0 14px;
 }
 h1 em { color: var(--muted); }
 .lead {
-  font-size: clamp(16.5px, 2vw, 19px);
+  font-size: clamp(16px, 1.5vw, 17.5px);
   color: var(--muted);
-  max-width: 640px;
+  max-width: 740px;
   margin: 0;
 }
 .lead strong { color: var(--fg); font-weight: 500; }
@@ -267,6 +267,7 @@ h1 em { color: var(--muted); }
   margin-inline: auto;
   top: 11%;
   width: 40%;
+  aspect-ratio: 600 / 1298;
   border: 5px solid var(--frame);
   border-radius: 24px;
   overflow: hidden;
@@ -278,7 +279,15 @@ h1 em { color: var(--muted); }
   display: block;
   width: 100%;
   height: auto;
+  /* Vid hover glider skärmdumpen uppåt i telefonen. Marginal i stället för transform, så att bilden inte blir suddig. */
+  margin-top: 0;
+  transition: margin-top 1.9s cubic-bezier(.3,.1,.2,1);
 }
+/* Telefonen har sajtens egen bakgrundsfärg medan bilden laddas */
+.card[data-site="nordrange"] .phone { background: #09151f; }
+.card[data-site="vvs"] .phone { background: #101c28; }
+.card[data-site="mangd"] .phone { background: #17191a; }
+.card[data-site="epa"] .phone { background: #0e0c18; }
 
 .meta { padding: 22px 4px 0; }
 .meta-top {
@@ -295,15 +304,14 @@ h2 {
   line-height: 1.1;
   margin: 0;
 }
-.dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  margin-right: 10px;
-  vertical-align: middle;
-  transform: translateY(-3px);
+.tag {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
 }
 .arrow {
   flex: none;
@@ -347,6 +355,15 @@ h2 {
 }
 .card:focus-visible .shot { outline: 2px solid var(--accent); outline-offset: 4px; }
 
+@media (hover: hover) {
+  .card:hover .phone img,
+  .card:focus-visible .phone img { margin-top: -64%; }
+}
+@media (hover: hover) and (max-width: 960px) {
+  .card:hover .phone img,
+  .card:focus-visible .phone img { margin-top: -56%; }
+}
+
 /* Andra kort tonas ned lite när ett är aktivt */
 @media (hover: hover) {
   .projects:has(.card:hover) .card:not(:hover) { opacity: .7; }
@@ -364,11 +381,29 @@ footer .wrap {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 8px 24px;
-  padding-top: 24px;
   padding-bottom: 32px;
   font-size: 14px;
   color: var(--muted);
 }
+.foot-rich {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) repeat(2, minmax(0, 1fr));
+  gap: 28px 40px;
+  padding: 40px 0 28px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14.5px;
+}
+.foot-rich .fbrand { font-family: var(--serif); font-size: 24px; color: var(--fg); text-decoration: none; }
+.foot-rich .fbrand em { font-style: italic; color: var(--muted); }
+.foot-rich p { margin: 8px 0 0; max-width: 340px; }
+.foot-rich h3 { margin: 4px 0 10px; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.foot-rich ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.foot-rich li a { color: var(--fg); text-decoration: none; }
+.foot-rich li a:hover,
+.foot-rich li a:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+.foot-rich li i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 9px; vertical-align: 1px; }
 .byline {
   display: inline-flex;
   align-items: center;
@@ -394,9 +429,17 @@ footer .wrap {
   .phone { width: 46%; }
 }
 @media (max-width: 640px) {
-  .projects { grid-template-columns: 1fr; gap: 40px; }
-  h2 { font-size: 28px; }
-  .meta { padding-top: 18px; }
+  /* Två kort i bredd med telefon, etikett och namn, så att alla fyra syns utan lång scroll */
+  .projects { gap: 24px 14px; }
+  .shot { aspect-ratio: 4 / 5; border-radius: 14px; }
+  .phone { width: 68%; top: 9%; border-width: 4px; border-radius: 18px; }
+  .meta { padding: 12px 2px 0; }
+  .meta-top { margin-bottom: 0; }
+  h2 { font-size: 21px; }
+  .tag { font-size: 10.5px; margin-bottom: 3px; }
+  .desc, .url, .arrow { display: none; }
+  .foot-rich { grid-template-columns: 1fr 1fr; padding-top: 32px; }
+  .foot-rich .fabout { grid-column: 1 / -1; }
 }
 
 /* Intro-animation. Innehållet syns alltid om animationen inte körs:
@@ -412,7 +455,7 @@ footer .wrap {
   @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
 }
 @media (prefers-reduced-motion: reduce) {
-  .shot, .phone, .arrow { transition: none !important; }
+  .shot, .phone, .phone img, .arrow { transition: none !important; }
 }
 </style>
 <script>
@@ -443,8 +486,9 @@ footer .wrap {
         <div class="phone"><img src="img/nordrange.webp" alt="Nordrange i mobilen: rutten Jönköping–Trondheim, 872 km med tre laddstopp" width="600" height="1298" decoding="async"></div>
       </div>
       <div class="meta">
+        <span class="tag">Resa</span>
         <div class="meta-top">
-          <h2><span class="dot"></span>Nordrange</h2>
+          <h2>Nordrange</h2>
           <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
         </div>
         <p class="desc">Ruttplanerare för elbil. Ange bil, batterinivå och resmål, så visar Nordrange var du ska ladda. Välj själv bland 20 laddnätverk i Sverige, Norge, Danmark och Finland.</p>
@@ -457,8 +501,9 @@ footer .wrap {
         <div class="phone"><img src="img/vvs.webp" alt="Formelkollen i mobilen: VVS-formelsamling med formelkategorier och sökfält" width="600" height="1298" decoding="async"></div>
       </div>
       <div class="meta">
+        <span class="tag">VVS</span>
         <div class="meta-top">
-          <h2><span class="dot"></span>Formelkollen</h2>
+          <h2>Formelkollen</h2>
           <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
         </div>
         <p class="desc">VVS-formelsamling för ventilation, värme, pumpar och tappvatten med inbyggda räknare, enhetsomvandlare och tryckfallskalkylatorer för rör och kanaler.</p>
@@ -471,8 +516,9 @@ footer .wrap {
         <div class="phone"><img src="img/mangdkollen.webp" alt="Mängdkollen i mobilen med ett uträknat resultat: 446 kg avjämningsmassa, 23 säckar" width="600" height="1298" decoding="async"></div>
       </div>
       <div class="meta">
+        <span class="tag">Bygg</span>
         <div class="meta-top">
-          <h2><span class="dot"></span>Mängdkollen</h2>
+          <h2>Mängdkollen</h2>
           <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
         </div>
         <p class="desc">Räkna rätt mängd avjämning, fix och fogbruk innan du åker till bygghandeln. Kilo, säckar och vatten utifrån tillverkarens egna åtgångsvärden.</p>
@@ -485,8 +531,9 @@ footer .wrap {
         <div class="phone"><img src="img/epa.webp" alt="EPAkollen i mobilen med en uträknad rutt längs Vättern: 37 km, 1 h 14 min och 38 kr" width="600" height="1298" decoding="async"></div>
       </div>
       <div class="meta">
+        <span class="tag">Resa</span>
         <div class="meta-top">
-          <h2><span class="dot"></span>EPAkollen</h2>
+          <h2>EPAkollen</h2>
           <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
         </div>
         <p class="desc">Räkna ut restid och bränslekostnad för din EPA-traktor. Rutten undviker motorvägar, räknas på 30&nbsp;km/h och använder dagens bensinpris.</p>
@@ -498,6 +545,29 @@ footer .wrap {
 
 <footer>
   <div class="wrap">
+    <div class="foot-rich">
+      <div class="fabout">
+        <a class="fbrand" href="/">Junestaden<em>.se</em></a>
+        <p>Gratis webbverktyg för bygg och vardag. Ingen inloggning, ingen reklam.</p>
+      </div>
+      <nav aria-label="Verktyg">
+        <h3>Verktyg</h3>
+        <ul>
+          <li><a href="https://nordrange.se"><i style="background:#1fc77a"></i>Nordrange</a></li>
+          <li><a href="https://vvs.junestaden.se"><i style="background:#ff8a3d"></i>Formelkollen</a></li>
+          <li><a href="https://bygg.junestaden.se"><i style="background:#ffc21a"></i>Mängdkollen</a></li>
+          <li><a href="https://epa.junestaden.se"><i style="background:#d4ff3a"></i>EPAkollen</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Mer">
+        <h3>Mer</h3>
+        <ul>
+          <li><a href="/om">Om mig</a></li>
+          <li><a href="/om#kontakt">Kontakt</a></li>
+          <li><a href="https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345" rel="me noopener" target="_blank">LinkedIn</a></li>
+        </ul>
+      </nav>
+    </div>
     <span>© <span id="year">2026</span> Junestaden</span>
     <span class="byline">Byggt i Jönköping av <a href="https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345" rel="author me noopener" target="_blank">Björn Norberg</a>
       <a class="social" href="https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345" rel="me noopener" target="_blank" aria-label="Björn Norberg på LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
