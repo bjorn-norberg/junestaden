@@ -3,6 +3,7 @@
  * /api/news?feed=<grupp>  Färdig nyhetslista som JSON för nyhetssidan. Workern hämtar gruppens
  *                         RSS-flöden, slår ihop dem och sorterar efter tid. Grupper: se FEEDS.
  * /api/rss?url=<adress>   Rått RSS-flöde (äldre väg, används av den gamla lokala startsidan).
+ * /api/geo                Besökarens ungefärliga ort (från Cloudflare), för vädret på nyhetssidan.
  * Allt annat (själva webbplatsen i public/) lämnas över till de statiska filerna.
  *
  * Båda vägarna svarar med CORS, så att nyhetssidan fungerar även som lokal fil.
@@ -79,6 +80,17 @@ export default {
       } catch (e) {
         return reply(500, "Internt fel");
       }
+    }
+    /* Ungefärlig ort för besökaren (Cloudflare uppskattar den från anslutningen). Används av vädret på Nyhetsläget
+       när ingen ort är vald. Svaret går bara till den som frågar och sparas inte. */
+    if (path === "/api/geo") {
+      if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: CORS });
+      const c = request.cf || {};
+      const lat = parseFloat(c.latitude), lon = parseFloat(c.longitude);
+      return new Response(JSON.stringify({
+        city: c.city || "", region: c.region || "", country: c.country || "",
+        lat: isFinite(lat) ? lat : null, lon: isFinite(lon) ? lon : null,
+      }), { headers: { ...CORS, "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" } });
     }
     if (env.ASSETS) return env.ASSETS.fetch(request);
     return reply(404, "Hittades inte");
