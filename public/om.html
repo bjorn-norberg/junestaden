@@ -160,6 +160,37 @@ header.top {
 .facts dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 9px 16px; font-size: 14.5px; line-height: 1.45; }
 .facts dt { color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; padding-top: 2px; }
 .facts dd { margin: 0; }
+
+/* Högerspalten på dator: vid kvarteren tonar porträttet ut och en telefon med verktygen tonar in */
+.stage { position: relative; aspect-ratio: 1; transition: height .8s cubic-bezier(.2,.7,.2,1); }
+.stage .portrait { position: absolute; left: 0; right: 0; top: 0; transition: opacity .5s, top .8s cubic-bezier(.2,.7,.2,1); }
+.tools .stage .portrait { opacity: 0; top: -28px; pointer-events: none; }
+.tphone {
+  --accent: #1fc77a;
+  position: absolute; left: 0; right: 0; top: 36px; height: 100%;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .5s, top .8s cubic-bezier(.2,.7,.2,1);
+}
+.tools .tphone { opacity: 1; top: 0; transition-delay: .15s, 0s; }
+.tframe {
+  position: relative; height: calc(100% - 46px); aspect-ratio: 600 / 1298;
+  border: 5px solid color-mix(in srgb, var(--accent) 40%, var(--frame)); border-radius: 30px; overflow: hidden;
+  background: #09151f;
+  box-shadow: 0 24px 48px -16px rgba(0,0,0,.7), 0 0 80px -24px color-mix(in srgb, var(--accent) 45%, transparent);
+  transition: border-color .5s, box-shadow .5s, background .5s;
+}
+.tframe img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transition: opacity .5s; }
+.tframe img.on { opacity: 1; }
+.tlabel { margin: 0; display: flex; align-items: baseline; gap: 10px; }
+.ttag { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); transition: color .5s; }
+.tname { font-family: var(--serif); font-size: 24px; }
+.facts-wrap { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .8s cubic-bezier(.2,.7,.2,1), opacity .4s; }
+.facts-wrap > .facts { min-height: 0; overflow: hidden; }
+.tools .facts-wrap { grid-template-rows: 0fr; opacity: 0; }
+/* Efter sista kortet tonar telefonen ut uppåt, och högerspalten är tom resten av sidan */
+.tools.done .tphone { opacity: 0; top: -28px; transition-delay: 0s, 0s; }
+.quarters.spot li:not(.on):not(:hover) { opacity: .55; }
 .facts .buttons { margin-top: 16px; gap: 10px; flex-wrap: nowrap; }
 .facts .btn { flex: 1; justify-content: center; padding: 10px 12px; font-size: 14.5px; }
 .eyebrow {
@@ -223,7 +254,8 @@ h1 em { color: var(--muted); }
 
 /* Innehåll */
 .content { grid-column: 1; grid-row: 2; max-width: 720px; padding-bottom: clamp(56px, 8vw, 96px); }
-section.block { padding-top: clamp(28px, 4vw, 44px); }
+section.block { padding-top: clamp(28px, 4vw, 44px); scroll-margin-top: 8px; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 h2 {
   font-family: var(--serif);
   font-weight: 400;
@@ -243,10 +275,12 @@ h2 {
   padding: 16px 18px 16px 20px;
   position: relative;
   overflow: hidden;
-  transition: border-color .2s, background .2s;
+  transition: border-color .3s, background .3s, opacity .4s;
 }
+.quarters li.on,
 .quarters li:hover,
 .quarters li:focus-within { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); background: color-mix(in srgb, var(--accent) 5%, var(--bg-2)); }
+.quarters li.on a::after,
 .quarters li:hover a::after { color: var(--accent); translate: 2px -2px; }
 .quarters a::before { content: ""; position: absolute; inset: 0; }
 .quarters li::before {
@@ -366,6 +400,9 @@ footer a { color: inherit; }
   .page { grid-template-columns: auto minmax(0, 1fr); column-gap: 16px; align-items: center; }
   .side, .side-inner, .intro { display: contents; }
   .facts { display: none; }
+  .stage, .facts-wrap { display: contents; }
+  .tphone { display: none; }
+  .stage .portrait { position: static; }
   .portrait { grid-column: 1; grid-row: 1; width: 76px; margin-top: 28px; }
   .portrait img { border-radius: 50%; }
   .portrait::before { display: none; }
@@ -395,6 +432,7 @@ footer a { color: inherit; }
 }
 @media (prefers-reduced-motion: reduce) {
   .btn, .quarters a::after { transition: none; }
+  .stage, .stage .portrait, .tphone, .tframe, .tframe img, .ttag, .facts-wrap { transition: none !important; }
 }
 </style>
 <script>
@@ -424,9 +462,21 @@ footer a { color: inherit; }
 
   <aside class="side" aria-label="Porträtt och kontakt">
     <div class="side-inner">
-      <figure class="portrait reveal">
-        <img src="img/bjorn.webp" alt="Porträtt av Björn Norberg" width="640" height="640" decoding="async">
-      </figure>
+      <div class="stage">
+        <figure class="portrait reveal">
+          <img src="img/bjorn.webp" alt="Porträtt av Björn Norberg" width="640" height="640" decoding="async">
+        </figure>
+        <div class="tphone" aria-hidden="true">
+          <div class="tframe">
+            <img data-site="nordrange" src="img/nordrange.webp" alt="" decoding="async" loading="lazy">
+            <img data-site="vvs" src="img/vvs.webp" alt="" decoding="async" loading="lazy">
+            <img data-site="mangd" src="img/mangdkollen.webp" alt="" decoding="async" loading="lazy">
+            <img data-site="epa" src="img/epa.webp" alt="" decoding="async" loading="lazy">
+          </div>
+          <p class="tlabel"><span class="ttag">Resa</span><span class="tname">Nordrange</span></p>
+        </div>
+      </div>
+      <div class="facts-wrap">
       <div class="facts">
         <dl>
           <dt>Bor</dt><dd>Jönköping</dd>
@@ -438,17 +488,18 @@ footer a { color: inherit; }
           <a class="btn btn-in" href="https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345" rel="me noopener" target="_blank">LinkedIn</a>
         </div>
       </div>
+      </div>
     </div>
   </aside>
 
   <div class="content">
-    <section class="block">
+    <section class="block" id="stad">
       <h2>Hur det blev en hel stad</h2>
       <p>Det började med ett litet problem. Sedan ett till. En gammal MacBook som nog hade räknat med en lugn pension fick bli server. Verktygen blev fler, och till slut behövdes en plats som höll ihop alltsammans.</p>
       <p>Då blev det Junestaden. Jag är uppvuxen i och kring Jönköping, så namnet kändes hemma. Varje verktyg fick bli ett eget kvarter. Några handlar om bygget, andra om resan dit. Stadsplaneringen är fortfarande lite pågående.</p>
     </section>
 
-    <section class="block">
+    <section class="block" id="kvarteren">
       <h2>En sväng genom kvarteren</h2>
       <ul class="quarters">
         <li data-site="nordrange">
@@ -470,13 +521,13 @@ footer a { color: inherit; }
       </ul>
     </section>
 
-    <section class="block">
+    <section class="block" id="tanker">
       <h2>Så tänker jag när jag bygger</h2>
       <p>Verktygen ska vara gratis, fungera utan konto och vara enkla att använda i mobilen. Du ska kunna få hjälp enkelt utan att först bli medlem i ännu en sak.</p>
       <p>Där det går använder jag tillverkarnas egna värden och länkar till källan. Förutsättningar och begränsningar ska framgå, så att du vet vad svaret bygger på. En snygg siffra är ju inte mycket värd om den är felaktig.</p>
     </section>
 
-    <section class="block">
+    <section class="block" id="driver">
       <h2>Det som driver mig</h2>
       <p>Jag tycker om att hjälpa människor med sådant jag själv har stått och kliat mig i huvudet över. Om någon slipper en extra resa eller sparar en stund tack vare ett verktyg blir jag glad. Det är en rätt bra anledning att fortsätta. Kaffe hjälper också.</p>
     </section>
@@ -539,6 +590,56 @@ document.getElementById('year').textContent = new Date().getFullYear();
   document.querySelectorAll('.js-mail').forEach(function (b) {
     b.href = 'mailto:' + b.dataset.u + '@' + b.dataset.d + '?subject=' + encodeURIComponent('Hej från Junestaden');
   });
+})();
+
+/* Högerspalten på dator: telefonen visar verktyget som är närmast mitten av skärmen, eller det man håller muspekaren över */
+(function () {
+  var mq = matchMedia('(min-width: 821px)'), side = document.querySelector('.side'), stage = document.querySelector('.stage');
+  var tph = document.querySelector('.tphone'), frame = document.querySelector('.tframe');
+  var imgs = [].slice.call(frame.querySelectorAll('img')), lis = [].slice.call(document.querySelectorAll('.quarters li'));
+  var kv = document.getElementById('kvarteren'), lista = document.querySelector('.quarters'), sista = lis[lis.length - 1], tag = tph.querySelector('.ttag'), namn = tph.querySelector('.tname');
+  var META = { nordrange: ['Resa', 'Nordrange', '#1fc77a', '#09151f'], vvs: ['VVS', 'Formelkollen', '#ff8a3d', '#101c28'],
+               mangd: ['Bygg', 'Mängdkollen', '#ffc21a', '#17191a'], epa: ['Resa', 'EPAkollen', '#d4ff3a', '#0e0c18'] };
+  var hover = null, visad = null, väntar = false;
+  function visa(k) {
+    if (visad === k) return; visad = k;
+    imgs.forEach(function (i) { i.classList.toggle('on', i.dataset.site === k); });
+    var m = META[k]; tph.style.setProperty('--accent', m[2]); frame.style.background = m[3];
+    tag.textContent = m[0]; namn.textContent = m[1];
+  }
+  function upd() {
+    väntar = false;
+    if (!mq.matches) {
+      side.classList.remove('tools', 'done'); lista.classList.remove('spot'); stage.style.height = '';
+      lis.forEach(function (l) { l.classList.remove('on'); }); return;
+    }
+    // börjat: kvarteren har kommit upp i bild. klar: sista kortets mitt har passerat 30 % från toppen
+    var r = kv.getBoundingClientRect(), s = sista.getBoundingClientRect();
+    var börjat = r.top < innerHeight * 0.55, klar = s.top + s.height / 2 < innerHeight * 0.3, på = börjat && !klar;
+    side.classList.toggle('tools', börjat);
+    side.classList.toggle('done', börjat && klar);
+    lista.classList.toggle('spot', på);
+    stage.style.height = (börjat ? Math.min(640, innerHeight - 120) : stage.offsetWidth) + 'px';
+    var akt = null;
+    if (på) {
+      akt = hover;
+      if (!akt) {
+        var bäst = 1e9;
+        lis.forEach(function (l) { var b = l.getBoundingClientRect(), d = Math.abs(b.top + b.height / 2 - innerHeight / 2); if (d < bäst) { bäst = d; akt = l; } });
+      }
+    }
+    lis.forEach(function (l) { l.classList.toggle('on', l === akt); });
+    if (akt) visa(akt.dataset.site);
+  }
+  lis.forEach(function (l) {
+    l.addEventListener('mouseenter', function () { hover = l; upd(); });
+    l.addEventListener('mouseleave', function () { hover = null; upd(); });
+  });
+  if (mq.matches) imgs.forEach(function (i) { i.loading = 'eager'; });
+  visa('nordrange');
+  addEventListener('scroll', function () { if (!väntar) { väntar = true; requestAnimationFrame(upd); } }, { passive: true });
+  addEventListener('resize', upd);
+  upd();
 })();
 </script>
 </body>
