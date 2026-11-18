@@ -434,6 +434,15 @@ footer a { color: inherit; }
   .btn, .quarters a::after { transition: none; }
   .stage, .stage .portrait, .tphone, .tframe, .tframe img, .ttag, .facts-wrap { transition: none !important; }
 }
+
+/* Bild och inforuta ligger still överst. Telefonen bor i högerspalten bredvid kvarteren och följer med medan korten syns */
+.side-inner { position: static; }
+.stage { aspect-ratio: auto; height: auto !important; }
+.stage .portrait { position: relative; }
+#kvarteren { position: relative; }
+.kvside { position: absolute; top: 0; bottom: 0; left: calc(100% + clamp(40px, 6vw, 80px)); width: clamp(280px, 28vw, 360px); }
+.kvside .tphone { position: sticky; top: 110px; height: 480px; opacity: 1; pointer-events: auto; transition: opacity .4s; }
+@media (max-width: 820px) { .kvside { display: none; } }
 </style>
 <script>
   document.documentElement.classList.add('anim');
@@ -466,15 +475,7 @@ footer a { color: inherit; }
         <figure class="portrait reveal">
           <img src="img/bjorn.webp" alt="Porträtt av Björn Norberg" width="640" height="640" decoding="async">
         </figure>
-        <div class="tphone" aria-hidden="true">
-          <div class="tframe">
-            <img data-site="nordrange" src="img/nordrange.webp" alt="" decoding="async" loading="lazy">
-            <img data-site="vvs" src="img/vvs.webp" alt="" decoding="async" loading="lazy">
-            <img data-site="mangd" src="img/mangdkollen.webp" alt="" decoding="async" loading="lazy">
-            <img data-site="epa" src="img/epa.webp" alt="" decoding="async" loading="lazy">
-          </div>
-          <p class="tlabel"><span class="ttag">Resa</span><span class="tname">Nordrange</span></p>
-        </div>
+      </div>
       </div>
       <div class="facts-wrap">
       <div class="facts">
@@ -519,6 +520,17 @@ footer a { color: inherit; }
           <p>Räknar ut hur lång tid en resa tar med EPA-traktor på 30 km/h och vad den kostar. Svar: längre än du tror, så ta med snacks.</p>
         </li>
       </ul>
+      <div class="kvside">
+    <div class="tphone" aria-hidden="true">
+      <div class="tframe">
+        <img data-site="nordrange" src="img/nordrange.webp" alt="" decoding="async" loading="lazy">
+        <img data-site="vvs" src="img/vvs.webp" alt="" decoding="async" loading="lazy">
+        <img data-site="mangd" src="img/mangdkollen.webp" alt="" decoding="async" loading="lazy">
+        <img data-site="epa" src="img/epa.webp" alt="" decoding="async" loading="lazy">
+      </div>
+      <p class="tlabel"><span class="ttag">Resa</span><span class="tname">Nordrange</span></p>
+  
+      </div>
     </section>
 
     <section class="block" id="tanker">
@@ -592,12 +604,13 @@ document.getElementById('year').textContent = new Date().getFullYear();
   });
 })();
 
-/* Högerspalten på dator: telefonen visar verktyget som är närmast mitten av skärmen, eller det man håller muspekaren över */
+/* Telefonen visar kortet närmast skärmens mitt, eller det man håller muspekaren över */
 (function () {
-  var mq = matchMedia('(min-width: 821px)'), side = document.querySelector('.side'), stage = document.querySelector('.stage');
-  var tph = document.querySelector('.tphone'), frame = document.querySelector('.tframe');
+  var mq = matchMedia('(min-width: 821px)'), side = document.querySelector('.kvside');
+  var tph = side.querySelector('.tphone'), frame = side.querySelector('.tframe');
   var imgs = [].slice.call(frame.querySelectorAll('img')), lis = [].slice.call(document.querySelectorAll('.quarters li'));
-  var kv = document.getElementById('kvarteren'), lista = document.querySelector('.quarters'), sista = lis[lis.length - 1], tag = tph.querySelector('.ttag'), namn = tph.querySelector('.tname');
+  var lista = document.querySelector('.quarters'), kv = document.getElementById('kvarteren');
+  var tag = tph.querySelector('.ttag'), namn = tph.querySelector('.tname');
   var META = { nordrange: ['Resa', 'Nordrange', '#1fc77a', '#09151f'], vvs: ['VVS', 'Formelkollen', '#ff8a3d', '#101c28'],
                mangd: ['Bygg', 'Mängdkollen', '#ffc21a', '#17191a'], epa: ['Resa', 'EPAkollen', '#d4ff3a', '#0e0c18'] };
   var hover = null, visad = null, väntar = false;
@@ -609,26 +622,19 @@ document.getElementById('year').textContent = new Date().getFullYear();
   }
   function upd() {
     väntar = false;
-    if (!mq.matches) {
-      side.classList.remove('tools', 'done'); lista.classList.remove('spot'); stage.style.height = '';
-      lis.forEach(function (l) { l.classList.remove('on'); }); return;
-    }
-    // börjat: kvarteren har kommit upp i bild. klar: sista kortets mitt har passerat 30 % från toppen
-    var r = kv.getBoundingClientRect(), s = sista.getBoundingClientRect();
-    var börjat = r.top < innerHeight * 0.55, klar = s.top + s.height / 2 < innerHeight * 0.3, på = börjat && !klar;
-    side.classList.toggle('tools', börjat);
-    side.classList.toggle('done', börjat && klar);
-    lista.classList.toggle('spot', på);
-    stage.style.height = (börjat ? Math.min(640, innerHeight - 120) : stage.offsetWidth) + 'px';
     var akt = null;
-    if (på) {
-      akt = hover;
-      if (!akt) {
-        var bäst = 1e9;
-        lis.forEach(function (l) { var b = l.getBoundingClientRect(), d = Math.abs(b.top + b.height / 2 - innerHeight / 2); if (d < bäst) { bäst = d; akt = l; } });
+    if (mq.matches) {
+      {
+        var r = kv.getBoundingClientRect();
+        if (r.top < innerHeight * 0.6 && r.bottom > innerHeight * 0.3) {
+          akt = hover;
+          if (!akt) { var bäst = 1e9; lis.forEach(function (l) { var b = l.getBoundingClientRect(), d = Math.abs(b.top + b.height / 2 - innerHeight / 2); if (d < bäst) { bäst = d; akt = l; } }); }
+        }
       }
     }
     lis.forEach(function (l) { l.classList.toggle('on', l === akt); });
+    lista.classList.toggle('spot', !!akt);
+    side.classList.toggle('vis', !!akt);
     if (akt) visa(akt.dataset.site);
   }
   lis.forEach(function (l) {
