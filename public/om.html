@@ -445,9 +445,12 @@ footer a { color: inherit; }
 .kvside .tphone { display: block; bottom: 0; height: auto; max-height: none; }
 .kvside .tframe { height: calc(100% - 48px); margin: 0 auto; }
 .kvside .tlabel { margin: 0; position: absolute; left: 0; right: 0; bottom: 0; justify-content: center; line-height: 1; }
-/* Telefonen (ram 450 px) startar vid rubriken, följer med 90 px från toppen och stannar när etiketten når EPAkollens underkant */
+/* Telefonen (420 px) startar vid rubriken, följer med 90 px från toppen och stannar när dess underkant når EPAkollens underkant */
 .kvside { bottom: 0; }
-.kvside .tphone { position: sticky; top: 90px; bottom: auto; height: 498px; }
+.kvside .tphone { position: sticky; top: 90px; bottom: auto; height: 420px; }
+/* Ingen etikett under telefonen, ramen fyller hela höjden */
+.kvside .tlabel { display: none; }
+.kvside .tframe { height: 100%; }
 @media (max-width: 820px) { .kvside { display: none; } }
 </style>
 <script>
