@@ -191,7 +191,7 @@ TELEFON = {"nordrange": (nordrange, "nordrange.png", "nordrange.webp"),
            "mangd": (mangd, "mangdkollen.png", "mangdkollen.webp"),
            "vvs": (vvs, "vvs.png", "vvs.webp"),
            "racer": (racer, "racer.png", "racer.webp")}
-DELNING = {"og": ("og.html", "og.jpg")}
+DELNING = {"og": ("og.html", "og.jpg"), "og-tvatt": ("og-tvatt.html", "og-tvatt.jpg")}
 
 
 async def main(argv):

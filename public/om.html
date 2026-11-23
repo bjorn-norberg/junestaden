@@ -296,6 +296,10 @@ h2 {
 .quarters li[data-site="vvs"]       { --accent: #ff8a3d; }
 .quarters li[data-site="mangd"]     { --accent: #ffc21a; }
 .quarters li[data-site="epa"]       { --accent: #d4ff3a; }
+.quarters li[data-site="tvatt"]     { --accent: #5aa9ff; }
+.quarters li[data-site="racer"]     { --accent: #ff4fa3; }
+.kv-sub { font-family: var(--serif); font-weight: 400; font-size: clamp(24px, 3vw, 30px); line-height: 1.15; margin: 30px 0 4px; }
+.kv-sub + p { margin: 0 0 12px; }
 .quarters a {
   font-family: var(--serif);
   font-size: 24px;
@@ -516,7 +520,6 @@ footer a { color: inherit; }
       <h2>Hur det blev en hel stad</h2>
       <p>Det började med ett litet problem. Sedan ett till. En gammal MacBook som nog hade räknat med en lugn pension fick bli server. Verktygen blev fler, och till slut behövdes en plats som höll ihop alltsammans.</p>
       <p>Då blev det Junestaden. Jag är uppvuxen i och kring Jönköping, så namnet kändes hemma. Varje verktyg fick bli ett eget kvarter. Några handlar om bygget, andra om resan dit. Stadsplaneringen är fortfarande lite pågående.</p>
-      <p>Vid sidan av verktygen finns också en <a href="/tvattstuga">bokningsapp för tvättstugorna</a> i vår förening och ett <a href="https://racer.junestaden.se">racingspel i 80-talsstil</a>.</p>
     </section>
 
     <section class="block" id="kvarteren">
@@ -539,6 +542,18 @@ footer a { color: inherit; }
           <p>Räknar ut hur lång tid en resa tar med EPA-traktor på 30 km/h och vad den kostar. Svar: längre än du tror, så ta med snacks.</p>
         </li>
       </ul>
+      <h3 class="kv-sub">Lite utanför stan</h3>
+      <p>Två projekt som inte är verktyg för alla, men som hör till staden ändå.</p>
+      <ul class="quarters">
+        <li data-site="tvatt">
+          <a href="/tvattstuga">Tvättstugebokning</a>
+          <p>Föreningens tvättstugor fick lämna brickorna i tavlan. Nu bokar grannarna i mobilen, och ingen behöver leta efter nycklar och brickor.</p>
+        </li>
+        <li data-site="racer">
+          <a href="https://racer.junestaden.se">Micro Racer '85</a>
+          <p>Retroracing med sex banor, tre varv och en topplista. Kör av vägen på Polar Island, så hamnar du i havet.</p>
+        </li>
+      </ul>
       <div class="kvside">
     <div class="tphone" aria-hidden="true">
       <div class="tframe">
@@ -546,6 +561,8 @@ footer a { color: inherit; }
         <img data-site="vvs" src="img/vvs.webp" alt="" decoding="async" loading="lazy">
         <img data-site="mangd" src="img/mangdkollen.webp" alt="" decoding="async" loading="lazy">
         <img data-site="epa" src="img/epa.webp" alt="" decoding="async" loading="lazy">
+        <img data-site="tvatt" src="img/tvatt-boka.webp" alt="" decoding="async" loading="lazy">
+        <img data-site="racer" src="img/racer.webp" alt="" decoding="async" loading="lazy">
       </div>
       <p class="tlabel"><span class="ttag">Resa</span><span class="tname">Nordrange</span></p>
   
@@ -630,10 +647,11 @@ document.getElementById('year').textContent = new Date().getFullYear();
   var mq = matchMedia('(min-width: 821px)'), side = document.querySelector('.kvside');
   var tph = side.querySelector('.tphone'), frame = side.querySelector('.tframe');
   var imgs = [].slice.call(frame.querySelectorAll('img')), lis = [].slice.call(document.querySelectorAll('.quarters li'));
-  var lista = document.querySelector('.quarters'), kv = document.getElementById('kvarteren');
+  var listor = [].slice.call(document.querySelectorAll('.quarters')), kv = document.getElementById('kvarteren');
   var tag = tph.querySelector('.ttag'), namn = tph.querySelector('.tname');
   var META = { nordrange: ['Resa', 'Nordrange', '#1fc77a', '#09151f'], vvs: ['VVS', 'Formelkollen', '#ff8a3d', '#101c28'],
-               mangd: ['Bygg', 'Mängdkollen', '#ffc21a', '#17191a'], epa: ['Resa', 'EPAkollen', '#d4ff3a', '#0e0c18'] };
+               mangd: ['Bygg', 'Mängdkollen', '#ffc21a', '#17191a'], epa: ['Resa', 'EPAkollen', '#d4ff3a', '#0e0c18'],
+               tvatt: ['Bokning', 'Tvättstugebokning', '#5aa9ff', '#f6f7f9'], racer: ['Spel', "Micro Racer '85", '#ff4fa3', '#2d6b2a'] };
   var hover = null, visad = null, väntar = false;
   function visa(k) {
     if (visad === k) return; visad = k;
@@ -654,7 +672,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
       }
     }
     lis.forEach(function (l) { l.classList.toggle('on', l === akt); });
-    lista.classList.toggle('spot', !!akt);
+    listor.forEach(function (l) { l.classList.toggle('spot', !!akt); });
     side.classList.toggle('vis', !!akt);
     if (akt) visa(akt.dataset.site);
   }
