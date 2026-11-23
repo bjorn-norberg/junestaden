@@ -95,6 +95,16 @@
             "offers": { "@type": "Offer", "price": "0", "priceCurrency": "SEK" },
             "author": { "@id": "https://junestaden.se/#person" }
           }
+        },
+        {
+          "@type": "ListItem", "position": 5,
+          "item": {
+            "@type": "VideoGame", "name": "Micro Racer '85", "url": "https://racer.junestaden.se/",
+            "applicationCategory": "GameApplication", "operatingSystem": "Alla", "genre": "Racing",
+            "description": "Retroracing i webbläsaren med sex banor, tre varv och en gemensam topplista.",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "SEK" },
+            "author": { "@id": "https://junestaden.se/#person" }
+          }
         }
       ]
     }
@@ -461,6 +471,24 @@ footer .wrap {
 @media (prefers-reduced-motion: reduce) {
   .shot, .phone, .phone img, .arrow { transition: none !important; }
 }
+
+/* Sidfotens länkrad under kolumnerna */
+.foot-rich .flinks { grid-column: 1 / -1; display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 0; padding-top: 22px; border-top: 1px solid var(--line); }
+.flinks a { color: var(--fg); text-decoration: none; padding: 0 18px; }
+.flinks a + a { border-left: 1px solid var(--line); }
+.flinks a:hover, .flinks a:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 640px) { .foot-rich .flinks { padding-top: 18px; } .flinks a { padding: 0 14px; } .foot-rich { column-gap: 20px; } .foot-rich li a { white-space: nowrap; } }
+
+/* Sektionen Fler projekt */
+.card[data-site="tvatt"] { --accent: #5aa9ff; }
+.card[data-site="racer"] { --accent: #ff4fa3; }
+.card[data-site="tvatt"] .phone { background: #f6f7f9; }
+.card[data-site="racer"] .phone { background: #2d6b2a; }
+.projects.first { padding-bottom: clamp(48px, 6vw, 72px); }
+.sect-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; border-top: 1px solid var(--line); padding-top: clamp(28px, 4vw, 44px); margin-bottom: clamp(24px, 3vw, 36px); }
+.sect-head h2 { font-size: clamp(28px, 3.4vw, 38px); }
+.sect-head p { margin: 0; color: var(--muted); font-size: 15px; }
+@media (max-width: 640px) { .sect-head { display: block; } .sect-head p { margin-top: 6px; font-size: 14px; } }
 </style>
 <script>
   document.documentElement.classList.add('anim');
@@ -481,10 +509,10 @@ footer .wrap {
   <section class="hero">
     <p class="eyebrow reveal">Projekt</p>
     <h1 class="reveal">Webbverktyg för <em>bygg</em> och vardag.</h1>
-    <p class="lead reveal">Jag heter <a class="name" href="/om"><strong>Björn Norberg</strong></a> och studerar till VVS-ingenjör i Jönköping. Här samlar jag verktygen jag har byggt. Alla är gratis, kräver ingen inloggning och fungerar lika bra i mobilen som på datorn.</p>
+    <p class="lead reveal">Jag heter <a class="name" href="/om"><strong>Björn Norberg</strong></a> och studerar till VVS-ingenjör i Jönköping. Här samlar jag verktygen jag har byggt, och några andra projekt. Verktygen är gratis, kräver ingen inloggning och fungerar lika bra i mobilen som på datorn.</p>
   </section>
 
-  <section class="projects" aria-label="Projekt">
+  <section class="projects first" aria-label="Projekt">
     <a class="card reveal" data-site="nordrange" href="https://nordrange.se">
       <div class="shot">
         <div class="phone"><img src="img/nordrange.webp" alt="Nordrange i mobilen: rutten Jönköping–Trondheim, 872 km med tre laddstopp" width="600" height="1298" decoding="async"></div>
@@ -549,6 +577,42 @@ footer .wrap {
       </div>
     </a>
   </section>
+  <section class="sect-head" aria-labelledby="fler">
+    <h2 id="fler">Fler projekt</h2>
+    <p>Byggt för föreningen och för nöjes skull.</p>
+  </section>
+  <section class="projects" aria-label="Fler projekt">
+    <a class="card reveal" data-site="tvatt" href="/tvattstuga">
+      <div class="shot">
+        <div class="phone"><img src="img/tvatt-boka.webp" alt="Tvättstugebokningen i mobilen: tre lediga pass i tvättstugan på Västra vägen" width="600" height="1298" decoding="async" loading="lazy"></div>
+      </div>
+      <div class="meta">
+        <span class="tag">Bokning</span>
+        <div class="meta-top">
+          <h2>Tvättstugebokning</h2>
+          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+        </div>
+        <p class="desc">Bokningsapp för tvättstugorna i HSB brf Rogberga. De boende bokar tvättid i mobilen, och styrelsen sköter konton, avbokningar och avstängningar för service på samma ställe.</p>
+        <p class="short">Bokningsapp för föreningens tvättstugor</p>
+        <span class="url">Läs om projektet</span>
+      </div>
+    </a>
+    <a class="card reveal" data-site="racer" href="https://racer.junestaden.se">
+      <div class="shot">
+        <div class="phone"><img src="img/racer.webp" alt="Micro Racer '85 i mobilen: en röd racerbil passerar mållinjen i 90 km/h" width="600" height="1298" decoding="async" loading="lazy"></div>
+      </div>
+      <div class="meta">
+        <span class="tag">Spel</span>
+        <div class="meta-top">
+          <h2>Micro Racer '85</h2>
+          <span class="arrow" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+        </div>
+        <p class="desc">Retroracing i webbläsaren med sex banor, tre varv och en gemensam topplista. Spelas med tangentbord, handkontroll eller touch i mobilen.</p>
+        <p class="short">Retroracing med topplista</p>
+        <span class="url">racer.junestaden.se</span>
+      </div>
+    </a>
+  </section>
 </main>
 
 <footer>
@@ -567,13 +631,15 @@ footer .wrap {
           <li><a href="https://epa.junestaden.se"><i style="background:#d4ff3a"></i>EPAkollen</a></li>
         </ul>
       </nav>
-      <nav aria-label="Mer">
-        <h3>Mer</h3>
+      <nav aria-label="Fler projekt">
+        <h3>Fler projekt</h3>
         <ul>
-          <li><a href="/om">Om mig</a></li>
-          <li><a href="/om#kontakt">Kontakt</a></li>
-          <li><a href="https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345" rel="me noopener" target="_blank">LinkedIn</a></li>
+          <li><a href="/tvattstuga"><i style="background:#5aa9ff"></i>Tvättstugebokning</a></li>
+          <li><a href="https://racer.junestaden.se"><i style="background:#ff4fa3"></i>Micro Racer '85</a></li>
         </ul>
+      </nav>
+      <nav class="flinks" aria-label="Mer">
+        <a href="/om">Om mig</a><a href="/om#kontakt">Kontakt</a><a href="https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345" rel="me noopener" target="_blank">LinkedIn</a>
       </nav>
     </div>
     <span>© <span id="year">2026</span> Junestaden</span>

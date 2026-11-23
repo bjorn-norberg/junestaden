@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tvättstugebokning för HSB brf Rogberga | Junestaden</title>
+<meta name="description" content="Bokningsapp för tvättstugorna i HSB brf Rogberga i Tenhult. De boende bokar tvättid i mobilen, och styrelsen sköter konton och avstängningar för service.">
+<meta name="author" content="Björn Norberg">
+<meta name="theme-color" content="#0e1116">
+<link rel="canonical" href="https://junestaden.se/tvattstuga">
+
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="sv_SE">
+<meta property="og:site_name" content="Junestaden">
+<meta property="og:url" content="https://junestaden.se/tvattstuga">
+<meta property="og:title" content="Tvättstugebokning för HSB brf Rogberga">
+<meta property="og:description" content="Bokningsapp för föreningens två tvättstugor: bokning i mobilen för de boende och en egen vy för styrelsen.">
+<meta property="og:image" content="https://junestaden.se/img/og.jpg?v=12">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e1116;
+  --bg-2: #141820;
+  --line: #262d38;
+  --fg: #f2efe8;
+  --muted: #9aa3b0;
+  --frame: #2a313c;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -12px rgba(0,0,0,.6);
+  --serif: "Instrument Serif", Georgia, serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Sidan är alltid mörk, oavsett systemets ljusa/mörka läge */
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+body::before {
+  /* svagt ljussken bakom rubriken */
+  content: "";
+  position: fixed;
+  inset: -20vh -10vw auto;
+  height: 70vh;
+  background: radial-gradient(50% 60% at 50% 0%, color-mix(in srgb, var(--fg) 7%, transparent), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+a { color: inherit; }
+
+.wrap {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
+}
+
+/* Topp */
+header.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 28px;
+}
+.brand {
+  font-family: var(--serif);
+  font-size: 26px;
+  letter-spacing: .2px;
+  text-decoration: none;
+}
+.brand em { font-style: italic; color: var(--muted); }
+.topnav { display: flex; gap: 4px; }
+.topnav a {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 7px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: color .2s, background .2s;
+}
+.topnav a:hover,
+.topnav a:focus-visible { color: var(--fg); background: color-mix(in srgb, var(--fg) 7%, transparent); }
+.topnav a[aria-current="page"] { color: var(--fg); background: color-mix(in srgb, var(--fg) 9%, transparent); }
+
+/* Sidlayout: text till vänster, porträtt i en högerspalt som följer med vid scroll */
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(280px, 28vw, 360px);
+  column-gap: clamp(40px, 6vw, 80px);
+  align-items: start;
+}
+.intro { grid-column: 1; grid-row: 1; padding-top: clamp(28px, 5vw, 64px); }
+.side {
+  grid-column: 2; grid-row: 1 / span 2; align-self: stretch;
+  display: flex; flex-direction: column; gap: 20px;
+  padding-top: clamp(28px, 5vw, 64px);
+}
+/* Porträttet följer med när man scrollar */
+.side-inner { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 16px; }
+.facts { border: 1px solid var(--line); background: var(--bg-2); border-radius: 20px; padding: 18px 20px; }
+.facts dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 9px 16px; font-size: 14.5px; line-height: 1.45; }
+.facts dt { color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; padding-top: 2px; }
+.facts dd { margin: 0; }
+
+/* Högerspalten på dator: vid kvarteren tonar porträttet ut och en telefon med verktygen tonar in */
+.stage { position: relative; aspect-ratio: 1; transition: height .8s cubic-bezier(.2,.7,.2,1); }
+.stage .portrait { position: absolute; left: 0; right: 0; top: 0; transition: opacity .5s, top .8s cubic-bezier(.2,.7,.2,1); }
+.tools .stage .portrait { opacity: 0; top: -28px; pointer-events: none; }
+.tphone {
+  --accent: #1fc77a;
+  position: absolute; left: 0; right: 0; top: 36px; height: 100%;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .5s, top .8s cubic-bezier(.2,.7,.2,1);
+}
+.tools .tphone { opacity: 1; top: 0; transition-delay: .15s, 0s; }
+.tframe {
+  position: relative; height: calc(100% - 46px); aspect-ratio: 600 / 1298;
+  border: 5px solid color-mix(in srgb, var(--accent) 40%, var(--frame)); border-radius: 30px; overflow: hidden;
+  background: #09151f;
+  box-shadow: 0 24px 48px -16px rgba(0,0,0,.7), 0 0 80px -24px color-mix(in srgb, var(--accent) 45%, transparent);
+  transition: border-color .5s, box-shadow .5s, background .5s;
+}
+.tframe img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transition: opacity .5s; }
+.tframe img.on { opacity: 1; }
+.tlabel { margin: 0; display: flex; align-items: baseline; gap: 10px; }
+.ttag { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); transition: color .5s; }
+.tname { font-family: var(--serif); font-size: 24px; }
+.facts-wrap { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .8s cubic-bezier(.2,.7,.2,1), opacity .4s; }
+.facts-wrap > .facts { min-height: 0; overflow: hidden; }
+.tools .facts-wrap { grid-template-rows: 0fr; opacity: 0; }
+/* Efter sista kortet tonar telefonen ut uppåt, och högerspalten är tom resten av sidan */
+.tools.done .tphone { opacity: 0; top: -28px; transition-delay: 0s, 0s; }
+.quarters.spot li:not(.on):not(:hover) { opacity: .55; }
+.facts .buttons { margin-top: 16px; gap: 10px; flex-wrap: nowrap; }
+.facts .btn { flex: 1; justify-content: center; padding: 10px 12px; font-size: 14.5px; }
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 18px;
+}
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+}
+h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(44px, 7vw, 80px);
+  line-height: 1.02;
+  letter-spacing: -.01em;
+  margin: 0 0 22px;
+}
+h1 em { color: var(--muted); }
+.lead p {
+  font-size: clamp(16.5px, 1.8vw, 18.5px);
+  color: var(--muted);
+  margin: 0 0 14px;
+  max-width: 720px;
+}
+.lead p:last-child { margin-bottom: 0; }
+.lead strong { color: var(--fg); font-weight: 500; }
+
+.portrait {
+  margin: 0;
+  position: relative;
+}
+.portrait::before {
+  /* varmt sken bakom bilden */
+  content: "";
+  position: absolute;
+  inset: 12% -8% -10%;
+  background: radial-gradient(closest-side, color-mix(in srgb, #ff8a3d 18%, transparent), transparent);
+  filter: blur(18px);
+  z-index: -1;
+}
+.portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+/* Innehåll */
+.content { grid-column: 1; grid-row: 2; max-width: 720px; padding-bottom: clamp(56px, 8vw, 96px); }
+section.block { padding-top: clamp(28px, 4vw, 44px); scroll-margin-top: 8px; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(30px, 4vw, 40px);
+  line-height: 1.1;
+  margin: 0 0 14px;
+}
+.content p { color: var(--muted); margin: 0 0 14px; font-size: 16.5px; }
+.content p strong { color: var(--fg); font-weight: 500; }
+.content p a { color: var(--fg); text-decoration-color: color-mix(in srgb, var(--fg) 35%, transparent); text-underline-offset: 4px; }
+.content p a:hover { text-decoration-color: var(--fg); }
+
+.quarters { list-style: none; padding: 0; margin: 6px 0 0; display: grid; gap: 12px; }
+.quarters li {
+  --accent: #fff;
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  border-radius: 16px;
+  padding: 16px 18px 16px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .3s, background .3s, opacity .4s;
+}
+.quarters li.on,
+.quarters li:hover,
+.quarters li:focus-within { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); background: color-mix(in srgb, var(--accent) 5%, var(--bg-2)); }
+.quarters li.on a::after,
+.quarters li:hover a::after { color: var(--accent); translate: 2px -2px; }
+.quarters a::before { content: ""; position: absolute; inset: 0; }
+.quarters li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent);
+}
+.quarters li[data-site="nordrange"] { --accent: #1fc77a; }
+.quarters li[data-site="vvs"]       { --accent: #ff8a3d; }
+.quarters li[data-site="mangd"]     { --accent: #ffc21a; }
+.quarters li[data-site="epa"]       { --accent: #d4ff3a; }
+.quarters a {
+  font-family: var(--serif);
+  font-size: 24px;
+  line-height: 1.2;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.quarters a::after {
+  content: "↗";
+  font-family: var(--sans);
+  font-size: 16px;
+  color: var(--muted);
+  transition: color .2s, translate .2s;
+}
+.quarters a:hover::after,
+.quarters a:focus-visible::after { color: var(--accent); translate: 2px -2px; }
+.quarters p { margin: 4px 0 0; font-size: 15.5px; }
+
+.buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 600 15.5px var(--sans);
+  text-decoration: none;
+  padding: 13px 20px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, color .2s, top .2s;
+  position: relative;
+  top: 0;
+}
+.btn svg { width: 18px; height: 18px; flex: none; }
+.btn:hover, .btn:focus-visible { top: -2px; }
+.btn-mail { background: var(--fg); color: #111; }
+.btn-mail:hover, .btn-mail:focus-visible { background: #fff; }
+/* Svagt blå fyllning och blåtonad ram även utan hover, så att knappen inte försvinner mot bakgrunden */
+.btn-in { background: color-mix(in srgb, #0a66c2 16%, var(--bg-2)); color: var(--fg); border-color: color-mix(in srgb, #4a9fe8 50%, var(--line)); }
+.btn-in svg { color: #4a9fe8; }
+.btn-in:hover, .btn-in:focus-visible { border-color: #4a9fe8; background: color-mix(in srgb, #0a66c2 32%, var(--bg-2)); }
+.btn:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+.nojs { font-size: 14px; color: var(--muted); margin-top: 10px; }
+
+footer {
+  margin-top: auto;
+  border-top: 1px solid var(--line);
+}
+footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-bottom: 32px;
+  font-size: 14px;
+  color: var(--muted);
+}
+footer a { color: inherit; }
+.foot-rich {
+  width: 100%;
+  display: grid;
+  /* Kolumnerna Verktyg och Mer ligger mot högerkanten, så att Mer slutar där linjen under slutar */
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 28px clamp(48px, 7vw, 104px);
+  padding: 40px 0 28px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14.5px;
+}
+.foot-rich .fbrand { font-family: var(--serif); font-size: 24px; color: var(--fg); text-decoration: none; }
+.foot-rich .fbrand em { font-style: italic; color: var(--muted); }
+.foot-rich p { margin: 8px 0 0; max-width: 340px; }
+.foot-rich h3 { margin: 4px 0 10px; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.foot-rich ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.foot-rich li a { color: var(--fg); text-decoration: none; }
+.foot-rich li a:hover,
+.foot-rich li a:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+.foot-rich li i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 9px; vertical-align: 1px; }
+.byline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.social {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin: -4px 0;
+  border-radius: 7px;
+  color: var(--muted);
+  transition: color .25s, background .25s;
+}
+.social svg { width: 16px; height: 16px; }
+.social:hover,
+.social:focus-visible { color: var(--fg); background: color-mix(in srgb, var(--fg) 8%, transparent); }
+
+
+/* Responsivt */
+@media (max-width: 820px) {
+  /* En kolumn: liten rund bild bredvid "Om mig", sedan rubrik, inledning och resten. Faktarutan visas bara på dator */
+  .page { grid-template-columns: auto minmax(0, 1fr); column-gap: 16px; align-items: center; }
+  .side, .side-inner, .intro { display: contents; }
+  .facts { display: none; }
+  .stage, .facts-wrap { display: contents; }
+  .tphone { display: none; }
+  .stage .portrait { position: static; }
+  .portrait { grid-column: 1; grid-row: 1; width: 76px; margin-top: 28px; }
+  .portrait img { border-radius: 50%; }
+  .portrait::before { display: none; }
+  .eyebrow { grid-column: 2; grid-row: 1; margin: 28px 0 0; }
+  h1 { grid-column: 1 / -1; grid-row: 2; margin-top: 18px; }
+  .lead { grid-column: 1 / -1; grid-row: 3; }
+  .content { grid-column: 1 / -1; grid-row: 4; }
+}
+@media (max-width: 640px) {
+  .foot-rich { grid-template-columns: 1fr 1fr; padding-top: 32px; }
+  .foot-rich .fabout { grid-column: 1 / -1; }
+}
+@media (max-width: 420px) {
+  .btn { width: 100%; justify-content: center; }
+  .topnav a { padding: 7px 10px; }
+  .brand { font-size: 24px; }
+}
+
+/* Intro-animation. Innehållet syns alltid om animationen inte körs:
+   klassen sätts bara med JS och tas bort efter 1,5 s oavsett. */
+@media (prefers-reduced-motion: no-preference) {
+  .anim .reveal { animation: rise .9s cubic-bezier(.2,.7,.2,1) backwards; }
+  .anim .reveal:nth-child(2) { animation-delay: .08s; }
+  .anim .reveal:nth-child(3) { animation-delay: .16s; }
+  .anim .portrait.reveal { animation-delay: .2s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn, .quarters a::after { transition: none; }
+  .stage, .stage .portrait, .tphone, .tframe, .tframe img, .ttag, .facts-wrap { transition: none !important; }
+}
+
+/* Bild och inforuta ligger still överst. Telefonen står i högerspalten från rubriken "En sväng genom kvarteren" ned till sista kortets underkant */
+.side-inner { position: static; }
+.stage { aspect-ratio: auto; height: auto !important; }
+.stage .portrait { position: relative; }
+#kvarteren { position: relative; }
+.kvside { position: absolute; top: clamp(28px, 4vw, 44px); bottom: 0; left: calc(100% + clamp(40px, 6vw, 80px)); width: clamp(280px, 28vw, 360px); }
+.kvside .tphone { position: absolute; top: 0; height: 100%; max-height: 640px; opacity: 1; pointer-events: auto; transition: opacity .4s; }
+.kvside .tphone { display: block; bottom: 0; height: auto; max-height: none; }
+.kvside .tframe { height: calc(100% - 48px); margin: 0 auto; }
+.kvside .tlabel { margin: 0; position: absolute; left: 0; right: 0; bottom: 0; justify-content: center; line-height: 1; }
+/* Telefonen (420 px) startar vid rubriken, följer med 90 px från toppen och stannar när dess underkant når EPAkollens underkant */
+.kvside { bottom: 0; }
+.kvside .tphone { position: sticky; top: 90px; bottom: auto; height: 420px; }
+/* Ingen etikett under telefonen, ramen fyller hela höjden */
+.kvside .tlabel { display: none; }
+.kvside .tframe { height: 100%; }
+@media (max-width: 820px) { .kvside { display: none; } }
+
+/* Sidfotens länkrad under kolumnerna */
+.foot-rich .flinks { grid-column: 1 / -1; display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 0; padding-top: 22px; border-top: 1px solid var(--line); }
+.flinks a { color: var(--fg); text-decoration: none; padding: 0 18px; }
+.flinks a + a { border-left: 1px solid var(--line); }
+.flinks a:hover, .flinks a:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 640px) { .foot-rich .flinks { padding-top: 18px; } .flinks a { padding: 0 14px; } .foot-rich { column-gap: 20px; } .foot-rich li a { white-space: nowrap; } }
+
+/* Projektsida */
+.case { padding-bottom: clamp(56px, 8vw, 96px); }
+.back { display: inline-flex; gap: 8px; margin-top: clamp(24px, 4vw, 44px); font-size: 14.5px; color: var(--muted); text-decoration: none; }
+.back:hover, .back:focus-visible { color: var(--fg); }
+.case-hero { padding-top: 20px; max-width: 760px; }
+.case-hero .eyebrow { color: #5aa9ff; }
+.gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 32px); margin: clamp(36px, 5vw, 56px) 0 0; padding: clamp(28px, 4vw, 44px); border: 1px solid var(--line); border-radius: 24px;
+  background: radial-gradient(60% 90% at 50% 100%, color-mix(in srgb, #5aa9ff 16%, transparent), transparent 70%), var(--bg-2); }
+.gallery figure { margin: 0; }
+.gphone { aspect-ratio: 600 / 689; border: 5px solid var(--frame); border-radius: 18px; overflow: hidden; background: #f6f7f9; box-shadow: 0 24px 48px -16px rgba(0,0,0,.7); }
+.gphone img { display: block; width: 100%; height: auto; }
+.gallery figcaption { margin-top: 12px; text-align: center; font-size: 14px; line-height: 1.45; color: var(--muted); }
+.case-body { max-width: 720px; }
+.case-body h2 { margin-top: clamp(36px, 5vw, 56px); }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 6px; }
+.col { border: 1px solid var(--line); background: var(--bg-2); border-radius: 16px; padding: 18px 20px; }
+.col h3 { margin: 0 0 8px; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #5aa9ff; }
+.col ul, .tech { margin: 0; padding-left: 18px; color: var(--muted); font-size: 15.5px; }
+.col li, .tech li { margin: 4px 0; }
+.tech strong { color: var(--fg); font-weight: 500; }
+@media (max-width: 820px) {
+  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 20px; }
+  .cols { grid-template-columns: 1fr; }
+}
+</style>
+<script>
+  document.documentElement.classList.add('anim');
+  setTimeout(function () { document.documentElement.classList.remove('anim'); }, 1500);
+</script>
+</head>
+<body>
+
+<header class="wrap top">
+  <a class="brand" href="/">Junestaden<em>.se</em></a>
+  <nav class="topnav" aria-label="Huvudmeny">
+    <a href="/" aria-current="page">Projekt</a>
+    <a href="/om">Om mig</a>
+  </nav>
+</header>
+
+
+<main class="wrap case">
+  <a class="back" href="/">← Alla projekt</a>
+  <section class="case-hero">
+    <p class="eyebrow">Projekt · Bokning</p>
+    <h1>Tvättstuge<em>bokning</em></h1>
+    <div class="lead"><p>En bokningsapp för tvättstugorna i HSB brf Rogberga i Tenhult. De boende bokar tvättid i mobilen, och styrelsen sköter konton, avbokningar och avstängningar för service på samma ställe.</p></div>
+  </section>
+
+  <section class="gallery" aria-label="Skärmbilder">
+    <figure><div class="gphone"><img src="img/tvatt-boka-skarm.webp" alt="Kalendern med tre lediga pass" width="600" height="689" loading="lazy" decoding="async"></div><figcaption>Boka: lediga pass i tvättstugan på Västra vägen</figcaption></figure>
+    <figure><div class="gphone"><img src="img/tvatt-bokad-skarm.webp" alt="Ett bokat pass som visas som upptaget" width="600" height="689" loading="lazy" decoding="async"></div><figcaption>Bokat: passet visas som upptaget och kan avbokas</figcaption></figure>
+    <figure><div class="gphone"><img src="img/tvatt-sparr-skarm.webp" alt="Styrelsens formulär för att spärra en dag" width="600" height="689" loading="lazy" decoding="async"></div><figcaption>Styrelsen stänger av en dag för service</figcaption></figure>
+    <figure><div class="gphone"><img src="img/tvatt-bokningar-skarm.webp" alt="Styrelsens lista med bokningar" width="600" height="689" loading="lazy" decoding="async"></div><figcaption>Styrelsens lista över alla bokningar</figcaption></figure>
+  </section>
+
+  <div class="case-body content">
+    <section>
+      <h2>Bakgrund</h2>
+      <p>Tidigare bokade vi tvättid med tvättbrickor i en tavla, och det fungerade sådär. Nycklar till brickorna försvann, tavlorna rensades inte efter passerade tider, och det fanns fler brickor än platser i parkeringsläget. Brickor fick därför sitta kvar på tider som redan varit. Till slut kändes det som att det var dags att göra något åt det.</p>
+      <p>Lösningen behövde vara så enkel att alla i föreningen kan använda den, oavsett ålder och vana vid mobilen. Därför börjar allt med en QR-kod. Man riktar mobilkameran mot koden och kommer direkt till bokningen. QR-koden sitter uppe i trapphusen och på dörren till tvättstugan. Den finns också på ett infoblad med regler och instruktioner, som delas ut till alla boende och till nyinflyttade.</p>
+      <p>Appen är byggd för mobilen i första hand men fungerar lika bra i datorns webbläsare. Det finns ingen app att ladda ner från en appbutik. I stället kan man lägga den på hemskärmen via mobilens webbläsare, och då öppnas den som en vanlig app.</p>
+      <p>Nu ser alla direkt vilka tider som är lediga, och ingen behöver leta efter en bricka. Passerade tider försvinner av sig själva, och avbokning går ända fram till att passet börjar. Om en maskin behöver service kan styrelsen stänga av tvättstugan, och då ser de boende varför tiden inte går att boka.</p>
+    </section>
+    <section>
+      <h2>Vad den gör</h2>
+      <div class="cols">
+        <div class="col"><h3>För de boende</h3><ul>
+          <li>Logga in med e-post och eget lösenord</li><li>Se lediga pass i båda tvättstugorna</li><li>Boka och avboka, högst två bokningar åt gången</li><li>Se sina bokningar och få besked om styrelsen avbokat</li></ul></div>
+        <div class="col"><h3>För styrelsen</h3><ul>
+          <li>Bjuda in boende och sköta konton</li><li>Se alla bokningar med lägenhet</li><li>Boka och avboka åt en lägenhet</li><li>Stänga av pass, dagar eller perioder för service</li></ul></div>
+      </div>
+    </section>
+    <section>
+      <h2>Så är den byggd</h2>
+      <ul class="tech">
+        <li><strong>Mobilen först:</strong> byggd för små skärmar, med tydliga färger för lediga och upptagna pass.</li>
+        <li><strong>Reglerna sitter i databasen:</strong> antal bokningar, tider och vem som får se vad kontrolleras av databasen, inte bara av appen.</li>
+        <li><strong>Data i Sverige:</strong> inloggning och databas hos Supabase i Stockholm.</li>
+        <li><strong>Teknik:</strong> React och TypeScript, publicerad på Cloudflare.</li>
+      </ul>
+    </section>
+    <section id="kontakt">
+      <h2>Vill din förening ha något liknande?</h2>
+      <p>Hör gärna av dig, så berättar jag mer om hur det fungerar.</p>
+      <div class="buttons">
+        <a class="btn btn-mail js-mail" href="/om#kontakt" data-u="bjorn.jkpg" data-d="gmail.com">Mejla mig</a>
+        <a class="btn btn-in" href="https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345" rel="me noopener" target="_blank">LinkedIn</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-rich">
+      <div class="fabout">
+        <a class="fbrand" href="/">Junestaden<em>.se</em></a>
+        <p>Gratis webbverktyg för bygg och vardag. Ingen inloggning, ingen reklam.</p>
+      </div>
+      <nav aria-label="Verktyg">
+        <h3>Verktyg</h3>
+        <ul>
+          <li><a href="https://nordrange.se"><i style="background:#1fc77a"></i>Nordrange</a></li>
+          <li><a href="https://vvs.junestaden.se"><i style="background:#ff8a3d"></i>Formelkollen</a></li>
+          <li><a href="https://bygg.junestaden.se"><i style="background:#ffc21a"></i>Mängdkollen</a></li>
+          <li><a href="https://epa.junestaden.se"><i style="background:#d4ff3a"></i>EPAkollen</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Fler projekt">
+        <h3>Fler projekt</h3>
+        <ul>
+          <li><a href="/tvattstuga"><i style="background:#5aa9ff"></i>Tvättstugebokning</a></li>
+          <li><a href="https://racer.junestaden.se"><i style="background:#ff4fa3"></i>Micro Racer '85</a></li>
+        </ul>
+      </nav>
+      <nav class="flinks" aria-label="Mer">
+        <a href="/om">Om mig</a><a href="/om#kontakt">Kontakt</a><a href="https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345" rel="me noopener" target="_blank">LinkedIn</a>
+      </nav>
+    </div>
+    <span>© <span id="year">2026</span> Junestaden</span>
+    <span class="byline">Byggt i Jönköping av <a href="https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345" rel="author me noopener" target="_blank">Björn Norberg</a>
+      <a class="social" href="https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345" rel="me noopener" target="_blank" aria-label="Björn Norberg på LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
+    </span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+(function () {
+  document.querySelectorAll('.js-mail').forEach(function (b) {
+    b.href = 'mailto:' + b.dataset.u + '@' + b.dataset.d + '?subject=' + encodeURIComponent('Hej från Junestaden');
+  });
+})();
+
+
+</script>
+</body>
+</html>

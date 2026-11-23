@@ -155,6 +155,24 @@ async def vvs(p, tmp):
     await b.close()
 
 
+async def racer(p, tmp):
+    """Micro Racer '85: första banan, bilen i fart strax efter start (gasen hålls inne en stund)."""
+    b = await p.chromium.launch(channel="msedge")
+    ctx, sida = await ny_telefon(b, 390, 844)
+    await gå_till(sida, "https://racer.junestaden.se/")
+    await sida.wait_for_timeout(1500)
+    await sida.get_by_text("Start Engine").click()
+    await sida.wait_for_timeout(4800)            # nedräkningen med startljusen
+    await sida.keyboard.down("ArrowUp")
+    await sida.wait_for_timeout(GAS_MS)
+    await sida.screenshot(path=str(tmp / "racer.png"))
+    await sida.keyboard.up("ArrowUp")
+    await b.close()
+
+
+GAS_MS = 700  # hur länge gasen hålls inne innan bilden tas
+
+
 async def delningsbild(p, mall, mål):
     """Ritar en mall (design/og*.html) i dubbel upplösning och skalar ned till 1200 x 630."""
     b = await p.chromium.launch(channel="msedge")
@@ -171,7 +189,8 @@ async def delningsbild(p, mall, mål):
 TELEFON = {"nordrange": (nordrange, "nordrange.png", "nordrange.webp"),
            "epa": (epa, "epa.png", "epa.webp"),
            "mangd": (mangd, "mangdkollen.png", "mangdkollen.webp"),
-           "vvs": (vvs, "vvs.png", "vvs.webp")}
+           "vvs": (vvs, "vvs.png", "vvs.webp"),
+           "racer": (racer, "racer.png", "racer.webp")}
 DELNING = {"og": ("og.html", "og.jpg")}
 
 
