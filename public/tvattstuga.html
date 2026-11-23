@@ -433,10 +433,10 @@ footer a { color: inherit; }
 .back:hover, .back:focus-visible { color: var(--fg); }
 .case-hero { padding-top: 20px; max-width: 760px; }
 .case-hero .eyebrow { color: #5aa9ff; }
-.gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 32px); margin: clamp(36px, 5vw, 56px) 0 0; padding: clamp(28px, 4vw, 44px); border: 1px solid var(--line); border-radius: 24px;
+.gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 342px)); justify-content: center; column-gap: clamp(32px, 6vw, 88px); row-gap: clamp(28px, 3.4vw, 44px); margin: clamp(36px, 5vw, 56px) 0 0; padding: clamp(28px, 4vw, 44px); border: 1px solid var(--line); border-radius: 24px;
   background: radial-gradient(60% 90% at 50% 100%, color-mix(in srgb, #5aa9ff 16%, transparent), transparent 70%), var(--bg-2); }
 .gallery figure { margin: 0; }
-.gphone { aspect-ratio: 600 / 689; border: 5px solid var(--frame); border-radius: 18px; overflow: hidden; background: #f6f7f9; box-shadow: 0 24px 48px -16px rgba(0,0,0,.7); }
+.gphone { aspect-ratio: 600 / 689; border: 5px solid var(--frame); border-radius: 18px; overflow: hidden; background: var(--frame); box-shadow: 0 24px 48px -16px rgba(0,0,0,.7); }
 .gphone img { display: block; width: 100%; height: auto; }
 .gallery figcaption { margin-top: 12px; text-align: center; font-size: 14px; line-height: 1.45; color: var(--muted); }
 .case-body { max-width: 720px; }
@@ -448,7 +448,7 @@ footer a { color: inherit; }
 .col li, .tech li { margin: 4px 0; }
 .tech strong { color: var(--fg); font-weight: 500; }
 @media (max-width: 820px) {
-  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 20px; }
+  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 32px); padding: 20px; }
   .cols { grid-template-columns: 1fr; }
 }
 </style>
@@ -477,10 +477,10 @@ footer a { color: inherit; }
   </section>
 
   <section class="gallery" aria-label="Skärmbilder">
-    <figure><div class="gphone"><img src="img/tvatt-boka-skarm.webp" alt="Kalendern med tre lediga pass" width="600" height="689" loading="lazy" decoding="async"></div><figcaption>Boka: lediga pass i tvättstugan på Västra vägen</figcaption></figure>
-    <figure><div class="gphone"><img src="img/tvatt-bokad-skarm.webp" alt="Ett bokat pass som visas som upptaget" width="600" height="689" loading="lazy" decoding="async"></div><figcaption>Bokat: passet visas som upptaget och kan avbokas</figcaption></figure>
-    <figure><div class="gphone"><img src="img/tvatt-sparr-skarm.webp" alt="Styrelsens formulär för att spärra en dag" width="600" height="689" loading="lazy" decoding="async"></div><figcaption>Styrelsen stänger av en dag för service</figcaption></figure>
-    <figure><div class="gphone"><img src="img/tvatt-bokningar-skarm.webp" alt="Styrelsens lista med bokningar" width="600" height="689" loading="lazy" decoding="async"></div><figcaption>Styrelsens lista över alla bokningar</figcaption></figure>
+    <figure><div class="gphone"><img src="img/tvatt-boka-skarm.webp" alt="Kalendern med tre lediga pass" width="600" height="689" decoding="async"></div><figcaption>Boka: lediga pass i tvättstugan på Västra vägen</figcaption></figure>
+    <figure><div class="gphone"><img src="img/tvatt-bokad-skarm.webp" alt="Ett bokat pass som visas som upptaget" width="600" height="689" decoding="async"></div><figcaption>Bokat: passet visas som upptaget och kan avbokas</figcaption></figure>
+    <figure><div class="gphone"><img src="img/tvatt-sparr-skarm.webp" alt="Styrelsens formulär för att spärra en dag" width="600" height="689" decoding="async"></div><figcaption>Styrelsen stänger av en dag för service</figcaption></figure>
+    <figure><div class="gphone"><img src="img/tvatt-bokningar-skarm.webp" alt="Styrelsens lista med bokningar" width="600" height="689" decoding="async"></div><figcaption>Styrelsens lista över alla bokningar</figcaption></figure>
   </section>
 
   <div class="case-body content">

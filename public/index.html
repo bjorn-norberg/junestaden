@@ -483,6 +483,18 @@ footer .wrap {
 .card[data-site="tvatt"] { --accent: #5aa9ff; }
 .card[data-site="racer"] { --accent: #ff4fa3; }
 .card[data-site="tvatt"] .phone { background: #f6f7f9; }
+/* Tvättkortet: appen är kort, så menyraden ligger i scenens underkant och skärmdumpen glider inte.
+   Skärmen är dämpad mot den mörka sidan och tänds vid hover. */
+.card[data-site="tvatt"] { --glow: 12%; }
+.card[data-site="tvatt"] .shot { background: radial-gradient(70% 80% at 50% 100%, color-mix(in srgb, var(--accent) var(--glow), transparent), transparent 70%), var(--bg-2); }
+.card[data-site="tvatt"] .phone img { margin-top: 0 !important; }
+.meny { position: absolute; z-index: 2; bottom: 0; left: 0; right: 0; margin-inline: auto; width: calc(40% - 10px); }
+.meny img { display: block; width: 100%; height: auto; }
+.card[data-site="tvatt"] .phone img, .meny img { filter: brightness(.74) saturate(.85); transition: margin-top 1.9s cubic-bezier(.3,.1,.2,1), filter .5s; }
+.card[data-site="tvatt"]:hover .phone img, .card[data-site="tvatt"]:focus-visible .phone img,
+.card[data-site="tvatt"]:hover .meny img, .card[data-site="tvatt"]:focus-visible .meny img { filter: none; }
+@media (max-width: 960px) { .meny { width: calc(46% - 10px); } }
+@media (max-width: 640px) { .meny { width: calc(68% - 8px); } }
 .card[data-site="racer"] .phone { background: #2d6b2a; }
 .projects.first { padding-bottom: clamp(48px, 6vw, 72px); }
 .sect-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; border-top: 1px solid var(--line); padding-top: clamp(28px, 4vw, 44px); margin-bottom: clamp(24px, 3vw, 36px); }
@@ -585,6 +597,7 @@ footer .wrap {
     <a class="card reveal" data-site="tvatt" href="/tvattstuga">
       <div class="shot">
         <div class="phone"><img src="img/tvatt-boka.webp" alt="Tvättstugebokningen i mobilen: tre lediga pass i tvättstugan på Västra vägen" width="600" height="1298" decoding="async" loading="lazy"></div>
+        <div class="meny"><img src="img/tvatt-meny.webp" alt="" width="600" height="57" decoding="async" loading="lazy"></div>
       </div>
       <div class="meta">
         <span class="tag">Bokning</span>
