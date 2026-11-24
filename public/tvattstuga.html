@@ -21,7 +21,7 @@
 <meta property="og:url" content="https://junestaden.se/tvattstuga">
 <meta property="og:title" content="Tvättstugebokning för HSB brf Rogberga">
 <meta property="og:description" content="Bokningsapp för föreningens två tvättstugor: bokning i mobilen för de boende och en egen vy för styrelsen.">
-<meta property="og:image" content="https://junestaden.se/img/og-tvatt.jpg?v=2">
+<meta property="og:image" content="https://junestaden.se/img/og-tvatt.jpg?v=3">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -450,6 +450,9 @@ footer a { color: inherit; }
 .tech strong { color: var(--fg); font-weight: 500; }
 .demo-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 24px; }
 .demo-cta span { font-size: 14px; color: var(--muted); }
+.btn .arr { width: 15px; height: 15px; position: relative; top: 0; left: 0; transition: top .25s cubic-bezier(.2,.7,.2,1), left .25s cubic-bezier(.2,.7,.2,1); }
+.btn:hover .arr, .btn:focus-visible .arr { top: -2px; left: 2px; }
+@media (prefers-reduced-motion: reduce) { .btn .arr { transition: none; } }
 .btn-ghost { background: transparent; color: var(--fg); border-color: var(--line); }
 .btn-ghost:hover, .btn-ghost:focus-visible { border-color: var(--muted); }
 .content p.demo-note { margin-top: 18px; font-size: 14px; color: var(--muted); max-width: 620px; }
@@ -481,7 +484,7 @@ footer a { color: inherit; }
     <h1>Tvättstuge<em>bokning</em></h1>
     <div class="lead"><p>En bokningsapp för tvättstugorna i HSB brf Rogberga i Tenhult. De boende bokar tvättid i mobilen, och styrelsen sköter konton, avbokningar och avstängningar för service på samma ställe.</p></div>
     <div class="demo-cta">
-      <a class="btn btn-mail" href="https://bokning-demo.rogberga-hsb.workers.dev" target="_blank" rel="noopener">Prova demon <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="btn btn-mail" href="https://bokning-demo.rogberga-hsb.workers.dev" target="_blank" rel="noopener">Prova demon <svg class="arr" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7M6 4.5h5.5V10"/></svg></a>
       <span>Påhittade uppgifter, inget konto behövs.</span>
     </div>
   </section>
@@ -523,7 +526,7 @@ footer a { color: inherit; }
       <h2>Vill din förening ha något liknande?</h2>
       <p>Prova demon och boka en tvättid själv, som boende eller som styrelse. Hör gärna av dig om du vill veta mer om hur det fungerar.</p>
       <div class="buttons">
-        <a class="btn btn-mail" href="https://bokning-demo.rogberga-hsb.workers.dev" target="_blank" rel="noopener">Prova demon <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        <a class="btn btn-mail" href="https://bokning-demo.rogberga-hsb.workers.dev" target="_blank" rel="noopener">Prova demon <svg class="arr" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7M6 4.5h5.5V10"/></svg></a>
         <a class="btn btn-ghost js-mail" href="/om#kontakt" data-u="bjorn.jkpg" data-d="gmail.com">Mejla mig</a>
         <a class="btn btn-in" href="https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345" rel="me noopener" target="_blank">LinkedIn</a>
       </div>
