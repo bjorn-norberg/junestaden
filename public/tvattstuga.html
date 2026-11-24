@@ -448,6 +448,11 @@ footer a { color: inherit; }
 .col ul, .tech { margin: 0; padding-left: 18px; color: var(--muted); font-size: 15.5px; }
 .col li, .tech li { margin: 4px 0; }
 .tech strong { color: var(--fg); font-weight: 500; }
+.demo-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 24px; }
+.demo-cta span { font-size: 14px; color: var(--muted); }
+.btn-ghost { background: transparent; color: var(--fg); border-color: var(--line); }
+.btn-ghost:hover, .btn-ghost:focus-visible { border-color: var(--muted); }
+.content p.demo-note { margin-top: 18px; font-size: 14px; color: var(--muted); max-width: 620px; }
 @media (max-width: 820px) {
   .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 32px); padding: 20px; }
   .cols { grid-template-columns: 1fr; }
@@ -475,6 +480,10 @@ footer a { color: inherit; }
     <p class="eyebrow">Projekt · Bokning</p>
     <h1>Tvättstuge<em>bokning</em></h1>
     <div class="lead"><p>En bokningsapp för tvättstugorna i HSB brf Rogberga i Tenhult. De boende bokar tvättid i mobilen, och styrelsen sköter konton, avbokningar och avstängningar för service på samma ställe.</p></div>
+    <div class="demo-cta">
+      <a class="btn btn-mail" href="https://bokning-demo.rogberga-hsb.workers.dev" target="_blank" rel="noopener">Prova demon <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <span>Påhittade uppgifter, inget konto behövs.</span>
+    </div>
   </section>
 
   <section class="gallery" aria-label="Skärmbilder">
@@ -512,11 +521,13 @@ footer a { color: inherit; }
     </section>
     <section id="kontakt">
       <h2>Vill din förening ha något liknande?</h2>
-      <p>Hör gärna av dig, så berättar jag mer om hur det fungerar.</p>
+      <p>Prova demon och boka en tvättid själv, som boende eller som styrelse. Hör gärna av dig om du vill veta mer om hur det fungerar.</p>
       <div class="buttons">
-        <a class="btn btn-mail js-mail" href="/om#kontakt" data-u="bjorn.jkpg" data-d="gmail.com">Mejla mig</a>
+        <a class="btn btn-mail" href="https://bokning-demo.rogberga-hsb.workers.dev" target="_blank" rel="noopener">Prova demon <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        <a class="btn btn-ghost js-mail" href="/om#kontakt" data-u="bjorn.jkpg" data-d="gmail.com">Mejla mig</a>
         <a class="btn btn-in" href="https://www.linkedin.com/in/bj%C3%B6rn-norberg-088992345" rel="me noopener" target="_blank">LinkedIn</a>
       </div>
+      <p class="demo-note">Demon delas av alla besökare och återställs varje natt. Det du ser kan alltså ha ändrats av någon annan. Vill du börja om från början kan du använda återställningsknappen i demon.</p>
     </section>
   </div>
 </main>
